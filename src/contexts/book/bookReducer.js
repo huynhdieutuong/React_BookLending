@@ -1,4 +1,4 @@
-import { SET_LOADING, GET_BOOKS } from '../types';
+import { SET_LOADING, SET_TEXT_SEARCH, GET_BOOKS } from '../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -8,6 +8,11 @@ export default (state, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case SET_TEXT_SEARCH:
+      return {
+        ...state,
+        textSearch: payload,
       };
     case GET_BOOKS:
       return {

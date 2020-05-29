@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Row, Col } from 'antd';
+import { Row } from 'antd';
 
 import BookContext from '../../contexts/book/bookContext';
 
@@ -8,11 +8,12 @@ import Spinner from '../layouts/Spinner';
 import Pagination from '../layouts/Pagination';
 
 const Books = () => {
-  const { books, loading, pagination, getBooks } = useContext(BookContext);
-  const perPage = 10;
+  const { books, loading, pagination, textSearch, getBooks } = useContext(
+    BookContext
+  );
 
   useEffect(() => {
-    getBooks(perPage);
+    getBooks();
     // eslint-disable-next-line
   }, []);
 
@@ -28,7 +29,7 @@ const Books = () => {
         <Pagination
           pagination={pagination}
           getBooks={getBooks}
-          perPage={perPage}
+          textSearch={textSearch}
         />
       </Row>
     </div>
