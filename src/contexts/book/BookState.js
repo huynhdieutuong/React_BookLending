@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import BookContext from './bookContext';
 import BookReducer from './bookReducer';
-import { SET_LOADING, SET_TEXT_SEARCH, GET_BOOKS } from '../types';
+import { SET_LOADING, SET_TEXT_SEARCH, GET_BOOKS, GET_BOOK } from '../types';
 
 const BookState = (props) => {
   const initialState = {
@@ -25,7 +25,7 @@ const BookState = (props) => {
     dispatch({ type: SET_TEXT_SEARCH, payload: text });
 
   // Get books
-  const getBooks = async (text = '', page = 1, perPage = 6) => {
+  const getBooks = async (text = '', page = 1, perPage = 10) => {
     setLoading();
 
     const res = await axios.get(
@@ -34,6 +34,18 @@ const BookState = (props) => {
 
     dispatch({
       type: GET_BOOKS,
+      payload: res.data,
+    });
+  };
+
+  // Get book
+  const getBook = async (id) => {
+    setLoading();
+
+    const res = await axios.get(`/api/books/${id}/view`);
+
+    dispatch({
+      type: GET_BOOK,
       payload: res.data,
     });
   };
@@ -48,6 +60,7 @@ const BookState = (props) => {
         textSearch,
         getBooks,
         setTextSearch,
+        getBook,
       }}
     >
       {props.children}

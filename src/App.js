@@ -10,6 +10,7 @@ import DefaultLayoutRoute from './components/routing/DefaultLayoutRoute';
 
 // Components
 import Books from './components/books/Books';
+import SingleBook from './components/books/SingleBook';
 import Login from './components/auth/Login';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
       <Router>
         <Switch>
           <DefaultLayoutRoute exact path='/' component={Books} />
+          <DefaultLayoutRoute exact path='/books/:id' component={SingleBook} />
           <DefaultLayoutRoute exact path='/login' component={Login} />
         </Switch>
       </Router>
