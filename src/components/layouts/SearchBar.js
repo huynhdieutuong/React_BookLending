@@ -8,7 +8,7 @@ const SearchBar = () => {
     <Search
       placeholder="Type book's title"
       onSearch={(value) => console.log(value)}
-      style={{ width: 250 }}
+      style={{ maxWidth: 250 }}
     />
   );
 };
