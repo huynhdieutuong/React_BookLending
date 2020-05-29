@@ -1,68 +1,108 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Book Lending
 
-## Available Scripts
+> An ecommerce site for lending books
 
-In the project directory, you can run:
+This is a React application. It is a small ecommerce site for lending books that includes authentication, books and transactions, profile, cart, admin.
 
-### `npm start`
+## Demo Live
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### The App is live at [Netlify.com]()
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### The API is live at [Swagger.io]()
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Functionality
 
-### `npm run build`
+## Books
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Get books & pagination
+- Search books by title
+- Get book by ID
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Cart
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Get cart
+- Add to cart
+- Remove book in cart
+- Decrease & Increase number's book
+- Make transaction (Require Login)
 
-### `npm run eject`
+## Auth
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Register user
+- Login user
+- Get logged in user
+- Prevent access Transactions, Profile if not log in.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Profile (Require Login)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Update info
+- Change password (Require current password)
+- Update avatar
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Transactions (Require Login)
 
-## Learn More
+- Get transactions by user ID
+- Get transaction by ID (owner)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Admin (Require Admin)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Books
 
-### Code Splitting
+- Get books & pagination
+- Search books by title
+- Create book
+- Edit book
+- Delete book
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Users
 
-### Analyzing the Bundle Size
+- Get users & pagination
+- Search users by name
+- Get user by ID
+- Create user
+- Edit user
+- Delete user
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Transactions
 
-### Making a Progressive Web App
+- Get transactions & pagination
+- Search transactions by ID
+- Get transaction by ID
+- Create transaction
+- Edit transaction
+- Delete transaction
+- Mark as Complete & Uncomplete
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+---
 
-### Advanced Configuration
+# Quick Start
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### Install dependencies
 
-### Deployment
+```
+npm install
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+### Build for production
 
-### `npm run build` fails to minify
+```
+npm run build
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+---
+
+## App Info
+
+### Author
+
+Tuong Huynh
+
+### Version
+
+1.0.0
+
+### License
+
+This project is licensed under the MIT License

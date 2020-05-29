@@ -8,10 +8,10 @@ const { Header, Content, Footer } = Layout;
 const DefaultLayout = ({ children }) => {
   return (
     <Layout className='layout'>
-      <Header style={{ padding: '0 100px' }}>
+      <Header style={{ padding: '0 50px' }}>
         <Navbar />
       </Header>
-      <Content style={{ padding: '30px 100px' }}>{children}</Content>
+      <Content style={{ padding: '30px 50px' }}>{children}</Content>
       <Footer style={{ textAlign: 'center' }}>
         Book Lending ©2020 Created by Tuong Huynh
       </Footer>

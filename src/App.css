@@ -8,9 +8,19 @@
   width: 120px;
   height: 40px;
   margin-top: 12px;
+  margin-right: 20px;
   float: left;
 }
 
 .menu-right {
   float: right;
+}
+
+.ant-card-body {
+  display: none;
+}
+
+.site-card-wrapper {
+  max-width: 1200px;
+  margin: auto;
 }

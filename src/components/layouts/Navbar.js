@@ -9,6 +9,7 @@ import {
   ScheduleOutlined,
 } from '@ant-design/icons';
 
+import SearchBar from './SearchBar';
 import Logo from '../images/logo-bookstore.png';
 
 const { SubMenu } = Menu;
@@ -36,6 +37,7 @@ const Navbar = () => {
           }}
         />
       </Link>
+      <SearchBar />
       <Menu
         className='menu-right'
         theme='dark'

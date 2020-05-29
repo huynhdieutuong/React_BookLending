@@ -2,6 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
 
+// States
+import BookState from './contexts/book/BookState';
+
 // Routes
 import DefaultLayoutRoute from './components/routing/DefaultLayoutRoute';
 
@@ -11,12 +14,14 @@ import Login from './components/auth/Login';
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <DefaultLayoutRoute exact path='/' component={Books} />
-        <DefaultLayoutRoute exact path='/login' component={Login} />
-      </Switch>
-    </Router>
+    <BookState>
+      <Router>
+        <Switch>
+          <DefaultLayoutRoute exact path='/' component={Books} />
+          <DefaultLayoutRoute exact path='/login' component={Login} />
+        </Switch>
+      </Router>
+    </BookState>
   );
 };
 
