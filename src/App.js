@@ -4,6 +4,7 @@ import './App.css';
 
 // States
 import BookState from './contexts/book/BookState';
+import AuthState from './contexts/auth/AuthState';
 
 // Routes
 import DefaultLayoutRoute from './components/routing/DefaultLayoutRoute';
@@ -15,15 +16,21 @@ import Login from './components/auth/Login';
 
 const App = () => {
   return (
-    <BookState>
-      <Router>
-        <Switch>
-          <DefaultLayoutRoute exact path='/' component={Books} />
-          <DefaultLayoutRoute exact path='/books/:id' component={SingleBook} />
-          <DefaultLayoutRoute exact path='/login' component={Login} />
-        </Switch>
-      </Router>
-    </BookState>
+    <AuthState>
+      <BookState>
+        <Router>
+          <Switch>
+            <DefaultLayoutRoute exact path='/' component={Books} />
+            <DefaultLayoutRoute
+              exact
+              path='/books/:id'
+              component={SingleBook}
+            />
+            <DefaultLayoutRoute exact path='/login' component={Login} />
+          </Switch>
+        </Router>
+      </BookState>
+    </AuthState>
   );
 };
 

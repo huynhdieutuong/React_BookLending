@@ -19,3 +19,18 @@
 .ant-card-body {
   display: none;
 }
+
+.wrapper-form {
+  min-height: calc(100vh - 194px) !important;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.wrapper-form .login-form {
+  width: 300px;
+}
+
+.login-form-button {
+  width: 100%;
+}

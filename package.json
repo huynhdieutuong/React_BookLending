@@ -35,5 +35,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://tuong-book-management-api.glitch.me"
+  "proxy": "https://book-lending-api.herokuapp.com"
 }
