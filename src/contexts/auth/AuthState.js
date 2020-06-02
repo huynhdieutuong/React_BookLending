@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGOUT,
 } from '../types';
 
 import AlertContext from '../alert/alertContext';
@@ -79,6 +80,9 @@ const AuthState = (props) => {
     }
   };
 
+  // Logout
+  const logout = () => dispatch({ type: LOGOUT });
+
   return (
     <AuthContext.Provider
       value={{
@@ -87,6 +91,7 @@ const AuthState = (props) => {
         user,
         login,
         loadUser,
+        logout,
       }}
     >
       {props.children}

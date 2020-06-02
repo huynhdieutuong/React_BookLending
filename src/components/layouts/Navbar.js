@@ -17,7 +17,7 @@ import AuthContext from '../../contexts/auth/authContext';
 const { SubMenu } = Menu;
 
 const Navbar = () => {
-  const { isAuthenticated, user } = useContext(AuthContext);
+  const { isAuthenticated, user, logout } = useContext(AuthContext);
 
   const [currentMenu, setCurrentMenu] = useState(
     localStorage.getItem('currentMenu')
@@ -59,12 +59,12 @@ const Navbar = () => {
         ) : (
           <SubMenu title={`Hi ${user.name}`}>
             <Menu.Item key='profile' icon={<UserOutlined />}>
-              Profile
+              <Link to='/profile'>Profile</Link>
             </Menu.Item>
             <Menu.Item key='transactions' icon={<ScheduleOutlined />}>
-              Transactions
+              <Link to='/transactions'>Transactions</Link>
             </Menu.Item>
-            <Menu.Item key='logout' icon={<LogoutOutlined />}>
+            <Menu.Item key='logout' icon={<LogoutOutlined />} onClick={logout}>
               Logout
             </Menu.Item>
           </SubMenu>
