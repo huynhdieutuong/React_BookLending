@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
 
 // States
+import AlertState from './contexts/alert/AlertState';
 import BookState from './contexts/book/BookState';
 import AuthState from './contexts/auth/AuthState';
 
@@ -16,21 +17,23 @@ import Login from './components/auth/Login';
 
 const App = () => {
   return (
-    <AuthState>
-      <BookState>
-        <Router>
-          <Switch>
-            <DefaultLayoutRoute exact path='/' component={Books} />
-            <DefaultLayoutRoute
-              exact
-              path='/books/:id'
-              component={SingleBook}
-            />
-            <DefaultLayoutRoute exact path='/login' component={Login} />
-          </Switch>
-        </Router>
-      </BookState>
-    </AuthState>
+    <AlertState>
+      <AuthState>
+        <BookState>
+          <Router>
+            <Switch>
+              <DefaultLayoutRoute exact path='/' component={Books} />
+              <DefaultLayoutRoute
+                exact
+                path='/books/:id'
+                component={SingleBook}
+              />
+              <DefaultLayoutRoute exact path='/login' component={Login} />
+            </Switch>
+          </Router>
+        </BookState>
+      </AuthState>
+    </AlertState>
   );
 };
 

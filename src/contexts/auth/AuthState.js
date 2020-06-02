@@ -1,10 +1,14 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
 import { SET_LOADING, LOGIN_SUCCESS, LOGIN_FAIL } from '../types';
 
+import AlertContext from '../alert/alertContext';
+
 const AuthState = (props) => {
+  const { setAlert } = useContext(AlertContext);
+
   const initialState = {
     loading: false,
     token: localStorage.getItem('token'),
@@ -42,6 +46,8 @@ const AuthState = (props) => {
       });
     } catch (err) {
       dispatch({ type: LOGIN_FAIL });
+
+      setAlert(err.response.data.errors, 'error');
     }
   };
 
