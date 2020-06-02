@@ -17,3 +17,5 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const CHANGE_AVATAR = 'CHANGE_AVATAR';
+export const LOADING_AVATAR = 'LOADING_AVATAR';

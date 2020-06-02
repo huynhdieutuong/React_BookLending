@@ -7,6 +7,8 @@ import {
   LOGOUT,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOADING_AVATAR,
+  CHANGE_AVATAR,
 } from '../types';
 
 export default (state, action) => {
@@ -17,6 +19,11 @@ export default (state, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case LOADING_AVATAR:
+      return {
+        ...state,
+        loadingAvatar: true,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -32,6 +39,12 @@ export default (state, action) => {
         loading: false,
         isAuthenticated: true,
         user: payload,
+      };
+    case CHANGE_AVATAR:
+      return {
+        ...state,
+        loadingAvatar: false,
+        user: payload ? payload : state.user,
       };
     case LOGIN_FAIL:
     case AUTH_ERROR:

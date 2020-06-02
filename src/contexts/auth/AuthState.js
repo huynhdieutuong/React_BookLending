@@ -11,6 +11,8 @@ import {
   LOGOUT,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CHANGE_AVATAR,
+  LOADING_AVATAR,
 } from '../types';
 
 import AlertContext from '../alert/alertContext';
@@ -22,6 +24,7 @@ const AuthState = (props) => {
 
   const initialState = {
     loading: false,
+    loadingAvatar: false,
     token: localStorage.getItem('token'),
     user: null,
     isAuthenticated: false,
@@ -29,10 +32,13 @@ const AuthState = (props) => {
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
-  const { loading, user, isAuthenticated } = state;
+  const { loading, loadingAvatar, user, isAuthenticated } = state;
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
+
+  // Set Loading Avatar
+  const setLoadingAvatar = () => dispatch({ type: LOADING_AVATAR });
 
   // Load User
   const loadUser = async () => {
@@ -115,16 +121,42 @@ const AuthState = (props) => {
   // Logout
   const logout = () => dispatch({ type: LOGOUT });
 
+  // Change Avatar
+  const changeAvatar = async (formData) => {
+    setLoadingAvatar();
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    try {
+      const res = await axios.put('/api/profile/avatar', formData, config);
+
+      dispatch({
+        type: CHANGE_AVATAR,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({ type: CHANGE_AVATAR });
+
+      setAlert(err.response.data.errors, 'error');
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         loading,
+        loadingAvatar,
         isAuthenticated,
         user,
         login,
         loadUser,
         logout,
         register,
+        changeAvatar,
       }}
     >
       {props.children}

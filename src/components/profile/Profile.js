@@ -1,21 +1,22 @@
 import React, { useContext } from 'react';
-import { Row, Col, PageHeader, Tabs, Button, Descriptions } from 'antd';
+import { Row, Col, PageHeader, Button, Descriptions } from 'antd';
 
 import AuthContext from '../../contexts/auth/authContext';
 
 import Spinner from '../layouts/Spinner';
+import ChangeAvatar from './ChangeAvatar';
 
 const Profile = () => {
   const { user, loading } = useContext(AuthContext);
 
-  const { avatarUrl, email, name, phone } = user;
+  const { email, name, phone } = user;
 
   if (loading) return <Spinner />;
 
   return (
     <Row>
       <Col span={5}>
-        <img style={{ width: '100%' }} src={avatarUrl} alt={name} />
+        <ChangeAvatar />
       </Col>
       <Col span={19}>
         <PageHeader
