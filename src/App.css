@@ -1,4 +1,6 @@
-.ant-layout-header {
+.ant-layout-header,
+.ant-layout-content,
+.ant-layout-footer {
   min-width: 800px;
 }
 

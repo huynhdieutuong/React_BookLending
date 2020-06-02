@@ -17,7 +17,7 @@ import Books from './components/books/Books';
 import SingleBook from './components/books/SingleBook';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Profile from './components/auth/Profile';
+import Profile from './components/profile/Profile';
 
 const App = () => {
   return (
