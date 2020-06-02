@@ -16,6 +16,7 @@ import PublicDefaultLayoutRoute from './components/routing/PublicDefaultLayoutRo
 import Books from './components/books/Books';
 import SingleBook from './components/books/SingleBook';
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import Profile from './components/auth/Profile';
 
 const App = () => {
@@ -32,6 +33,11 @@ const App = () => {
                 component={SingleBook}
               />
               <PublicDefaultLayoutRoute exact path='/login' component={Login} />
+              <PublicDefaultLayoutRoute
+                exact
+                path='/register'
+                component={Register}
+              />
               <PrivateDefaultLayoutRoute
                 exact
                 path='/profile'

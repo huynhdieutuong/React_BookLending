@@ -9,6 +9,8 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGOUT,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
 } from '../types';
 
 import AlertContext from '../alert/alertContext';
@@ -80,6 +82,36 @@ const AuthState = (props) => {
     }
   };
 
+  // Register
+  const register = async (email, name, phone, password, password2) => {
+    setLoading();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        '/api/auth/register',
+        { email, name, phone, password, password2 },
+        config
+      );
+
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+
+      loadUser();
+    } catch (err) {
+      dispatch({ type: REGISTER_FAIL });
+
+      setAlert(err.response.data.errors, 'error');
+    }
+  };
+
   // Logout
   const logout = () => dispatch({ type: LOGOUT });
 
@@ -92,6 +124,7 @@ const AuthState = (props) => {
         login,
         loadUser,
         logout,
+        register,
       }}
     >
       {props.children}
