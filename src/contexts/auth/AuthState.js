@@ -2,9 +2,17 @@ import React, { useReducer, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
-import { SET_LOADING, LOGIN_SUCCESS, LOGIN_FAIL } from '../types';
+import {
+  SET_LOADING,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+} from '../types';
 
 import AlertContext from '../alert/alertContext';
+
+import setAuthToken from '../../utils/setAuthToken';
 
 const AuthState = (props) => {
   const { setAlert } = useContext(AlertContext);
@@ -22,6 +30,24 @@ const AuthState = (props) => {
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
+
+  // Load User
+  const loadUser = async () => {
+    setLoading();
+
+    setAuthToken(localStorage.getItem('token'));
+
+    try {
+      const res = await axios.get('/api/profile');
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
 
   // Login
   const login = async (email, password) => {
@@ -44,6 +70,8 @@ const AuthState = (props) => {
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
+
+      loadUser();
     } catch (err) {
       dispatch({ type: LOGIN_FAIL });
 
@@ -58,6 +86,7 @@ const AuthState = (props) => {
         isAuthenticated,
         user,
         login,
+        loadUser,
       }}
     >
       {props.children}

@@ -1,4 +1,10 @@
-import { SET_LOADING, LOGIN_SUCCESS, LOGIN_FAIL } from '../types';
+import {
+  SET_LOADING,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+} from '../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -15,9 +21,16 @@ export default (state, action) => {
         ...state,
         loading: false,
         token: payload.token,
+      };
+    case USER_LOADED:
+      return {
+        ...state,
+        loading: false,
         isAuthenticated: true,
+        user: payload,
       };
     case LOGIN_FAIL:
+    case AUTH_ERROR:
       localStorage.removeItem('token');
       return {
         ...state,

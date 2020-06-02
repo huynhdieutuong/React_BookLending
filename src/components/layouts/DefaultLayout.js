@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Layout, message } from 'antd';
 
 import Navbar from './Navbar';
 
 import AlertContext from '../../contexts/alert/alertContext';
+import AuthContext from '../../contexts/auth/authContext';
 
 const { Header, Content, Footer } = Layout;
 
 const DefaultLayout = ({ children }) => {
   const { alerts, type } = useContext(AlertContext);
+  const { loadUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Layout className='layout'>
