@@ -13,6 +13,7 @@ import {
   REGISTER_FAIL,
   CHANGE_AVATAR,
   LOADING_AVATAR,
+  EDIT_PROFILE,
 } from '../types';
 
 import AlertContext from '../alert/alertContext';
@@ -145,6 +146,28 @@ const AuthState = (props) => {
     }
   };
 
+  // Edit Profile
+  const editProfile = async (formData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await axios.put('/api/profile/update', formData, config);
+
+      dispatch({
+        type: EDIT_PROFILE,
+        payload: res.data,
+      });
+
+      setAlert(['Profile Updated'], 'success');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -157,6 +180,7 @@ const AuthState = (props) => {
         logout,
         register,
         changeAvatar,
+        editProfile,
       }}
     >
       {props.children}

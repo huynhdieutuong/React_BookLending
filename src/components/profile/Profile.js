@@ -5,6 +5,7 @@ import AuthContext from '../../contexts/auth/authContext';
 
 import Spinner from '../layouts/Spinner';
 import ChangeAvatar from './ChangeAvatar';
+import EditProfileModal from './EditProfileModal';
 
 const Profile = () => {
   const { user, loading } = useContext(AuthContext);
@@ -24,9 +25,7 @@ const Profile = () => {
           onBack={() => window.history.back()}
           title={name}
           extra={[
-            <Button key='1' type='primary'>
-              Edit Profile
-            </Button>,
+            <EditProfileModal />,
             <Button key='2' type='primary'>
               Change Password
             </Button>,

@@ -9,6 +9,7 @@ import {
   REGISTER_FAIL,
   LOADING_AVATAR,
   CHANGE_AVATAR,
+  EDIT_PROFILE,
 } from '../types';
 
 export default (state, action) => {
@@ -45,6 +46,11 @@ export default (state, action) => {
         ...state,
         loadingAvatar: false,
         user: payload ? payload : state.user,
+      };
+    case EDIT_PROFILE:
+      return {
+        ...state,
+        user: payload,
       };
     case LOGIN_FAIL:
     case AUTH_ERROR:
