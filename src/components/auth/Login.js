@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -9,11 +9,7 @@ const Login = () => {
   const { login } = useContext(AuthContext);
 
   const onFinish = async ({ email, password }) => {
-    const hide = message.loading('Action in progress..', 0);
-
-    await login(email, password);
-
-    setTimeout(hide, 0);
+    login(email, password);
   };
 
   return (

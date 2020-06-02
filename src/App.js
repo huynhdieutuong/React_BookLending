@@ -9,11 +9,14 @@ import AuthState from './contexts/auth/AuthState';
 
 // Routes
 import DefaultLayoutRoute from './components/routing/DefaultLayoutRoute';
+import PrivateDefaultLayoutRoute from './components/routing/PrivateDefaultLayoutRoute';
+import PublicDefaultLayoutRoute from './components/routing/PublicDefaultLayoutRoute';
 
 // Components
 import Books from './components/books/Books';
 import SingleBook from './components/books/SingleBook';
 import Login from './components/auth/Login';
+import Profile from './components/auth/Profile';
 
 const App = () => {
   return (
@@ -28,7 +31,12 @@ const App = () => {
                 path='/books/:id'
                 component={SingleBook}
               />
-              <DefaultLayoutRoute exact path='/login' component={Login} />
+              <PublicDefaultLayoutRoute exact path='/login' component={Login} />
+              <PrivateDefaultLayoutRoute
+                exact
+                path='/profile'
+                component={Profile}
+              />
             </Switch>
           </Router>
         </BookState>
