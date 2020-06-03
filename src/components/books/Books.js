@@ -7,15 +7,22 @@ import BookItem from './BookItem';
 import Spinner from '../layouts/Spinner';
 import Pagination from '../layouts/Pagination';
 
-const Books = () => {
-  const { books, loading, pagination, textSearch, getBooks } = useContext(
-    BookContext
-  );
+const Books = ({ location }) => {
+  const { books, loading, pagination, getBooks } = useContext(BookContext);
+  const textSearch = localStorage.getItem('textSearch') || '';
 
   useEffect(() => {
-    getBooks();
+    if (location.pathname === '/') {
+      localStorage.removeItem('textSearch');
+      getBooks();
+    }
+
+    if (location.pathname === '/search') {
+      getBooks(textSearch);
+    }
+
     // eslint-disable-next-line
-  }, []);
+  }, [location]);
 
   if (loading) return <Spinner />;
 

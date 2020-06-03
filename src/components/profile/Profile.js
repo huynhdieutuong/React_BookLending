@@ -27,7 +27,7 @@ const Profile = () => {
           title={name}
           extra={[<EditProfileModal />, <ChangePasswordModal />]}
         >
-          <Descriptions size='small' column={3}>
+          <Descriptions size='small' column={1}>
             <Descriptions.Item label='Email'>{email}</Descriptions.Item>
             <Descriptions.Item label='Name'>{name}</Descriptions.Item>
             <Descriptions.Item label='Phone'>{phone}</Descriptions.Item>

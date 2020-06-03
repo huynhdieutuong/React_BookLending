@@ -1,5 +1,4 @@
 export const SET_LOADING = 'SET_LOADING';
-export const SET_TEXT_SEARCH = 'SET_TEXT_SEARCH';
 
 // Alert
 export const SET_ALERT = 'SET_ALERT';

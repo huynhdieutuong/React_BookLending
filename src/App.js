@@ -27,6 +27,7 @@ const App = () => {
           <Router>
             <Switch>
               <DefaultLayoutRoute exact path='/' component={Books} />
+              <DefaultLayoutRoute exact path='/search' component={Books} />
               <DefaultLayoutRoute
                 exact
                 path='/books/:id'
