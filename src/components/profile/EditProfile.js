@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, MobileOutlined } from '@ant-design/icons';
 
@@ -7,15 +7,19 @@ import AuthContext from '../../contexts/auth/authContext';
 const EditProfile = ({ setVisible }) => {
   const { user, editProfile } = useContext(AuthContext);
 
+  const [disabled, setDisabled] = useState(false);
+
   const onFinish = async (values) => {
     const { name, phone } = values;
 
     const hide = message.loading('Action in progress..', 0);
 
+    setDisabled(true);
     await editProfile({ name, phone });
 
     setTimeout(hide, 0);
     setVisible(false);
+    setDisabled(false);
   };
 
   return (
@@ -47,7 +51,12 @@ const EditProfile = ({ setVisible }) => {
         />
       </Form.Item>
       <Form.Item>
-        <Button type='primary' htmlType='submit' className='login-form-button'>
+        <Button
+          type='primary'
+          htmlType='submit'
+          className='login-form-button'
+          disabled={disabled}
+        >
           Update
         </Button>
       </Form.Item>

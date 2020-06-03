@@ -168,6 +168,24 @@ const AuthState = (props) => {
     }
   };
 
+  // Change Password
+  const changePassword = async (formData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      await axios.put('/api/profile/password', formData, config);
+
+      setAlert(['Password Changed'], 'success');
+      return true;
+    } catch (err) {
+      setAlert(err.response.data.errors, 'error');
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -181,6 +199,7 @@ const AuthState = (props) => {
         register,
         changeAvatar,
         editProfile,
+        changePassword,
       }}
     >
       {props.children}

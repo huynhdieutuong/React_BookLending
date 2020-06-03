@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Row, Col, PageHeader, Button, Descriptions } from 'antd';
+import { Row, Col, PageHeader, Descriptions } from 'antd';
 
 import AuthContext from '../../contexts/auth/authContext';
 
 import Spinner from '../layouts/Spinner';
 import ChangeAvatar from './ChangeAvatar';
 import EditProfileModal from './EditProfileModal';
+import ChangePasswordModal from './ChangePasswordModal';
 
 const Profile = () => {
   const { user, loading } = useContext(AuthContext);
@@ -24,12 +25,7 @@ const Profile = () => {
           className='site-page-header-responsive'
           onBack={() => window.history.back()}
           title={name}
-          extra={[
-            <EditProfileModal />,
-            <Button key='2' type='primary'>
-              Change Password
-            </Button>,
-          ]}
+          extra={[<EditProfileModal />, <ChangePasswordModal />]}
         >
           <Descriptions size='small' column={3}>
             <Descriptions.Item label='Email'>{email}</Descriptions.Item>
