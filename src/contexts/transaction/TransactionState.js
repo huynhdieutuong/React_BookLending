@@ -10,13 +10,14 @@ const TransactionState = (props) => {
   const initialState = {
     loading: false,
     transactions: [],
-    transaction: {},
+    transaction: null,
     pagination: {},
+    daysBorrow: 14 * 24 * 60 * 60 * 1000,
   };
 
   const [state, dispatch] = useReducer(TransactionReducer, initialState);
 
-  const { loading, transactions, transaction, pagination } = state;
+  const { loading, transactions, transaction, pagination, daysBorrow } = state;
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
@@ -54,6 +55,7 @@ const TransactionState = (props) => {
         transactions,
         transaction,
         pagination,
+        daysBorrow,
         getTransactions,
         getTransaction,
       }}

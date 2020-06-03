@@ -20,6 +20,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Profile from './components/profile/Profile';
 import Transactions from './components/transaction/Transactions';
+import SingleTransaction from './components/transaction/SingleTransaction';
 
 const App = () => {
   return (
@@ -55,6 +56,11 @@ const App = () => {
                   exact
                   path='/transactions'
                   component={Transactions}
+                />
+                <PrivateDefaultLayoutRoute
+                  exact
+                  path='/transactions/:id'
+                  component={SingleTransaction}
                 />
               </Switch>
             </Router>

@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table, Tag, Space, Button } from 'antd';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
+
+import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const TableTransactions = ({ dataSource, isAdmin }) => {
+  const { daysBorrow } = useContext(TransactionContext);
+
   const columns = [
     {
       title: 'ID',
@@ -20,7 +25,7 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
       key: 'isComplete',
       dataIndex: 'isComplete',
       render: (isComplete, transaction) => {
-        const expDate = Date.parse(transaction.date) + 14 * 24 * 60 * 60 * 1000;
+        const expDate = Date.parse(transaction.date) + daysBorrow;
         const nowDate = new Date();
 
         let isExpired = false;
@@ -44,19 +49,22 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
       },
     },
     {
-      title: 'Date',
+      title: 'Return Date',
       dataIndex: 'date',
       key: 'date',
-      render: (date) => (
-        <>{<Moment format='DD-MM-YYYY HH:mm'>{date}</Moment>}</>
-      ),
+      render: (date) => {
+        const expDate = Date.parse(date) + daysBorrow;
+        return <>{<Moment format='DD-MM-YYYY HH:mm'>{expDate}</Moment>}</>;
+      },
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_id) => (
+      render: (transaction) => (
         <Space size='middle'>
-          <Button type='primary'>View</Button>
+          <Button type='primary'>
+            <Link to={`/transactions/${transaction._id}`}>View</Link>
+          </Button>
           {isAdmin && <Button type='ghost'>Edit</Button>}
           {isAdmin && <Button type='danger'>Delete</Button>}
         </Space>
