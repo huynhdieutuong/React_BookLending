@@ -3,7 +3,7 @@ import { Radio } from 'antd';
 
 const Pagination = ({
   pagination: { page, prev, next },
-  getBooks,
+  getData,
   textSearch,
 }) => {
   const [currentPage, setCurrentPage] = useState(page);
@@ -14,11 +14,11 @@ const Pagination = ({
       onChange={(e) => {
         setCurrentPage(e.target.value);
         if (e.target.value === 'prev') {
-          getBooks(textSearch, prev);
+          getData(textSearch, prev);
         } else if (e.target.value === 'next') {
-          getBooks(textSearch, next);
+          getData(textSearch, next);
         } else {
-          getBooks(textSearch, e.target.value);
+          getData(textSearch, e.target.value);
         }
       }}
     >

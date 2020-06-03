@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Row, Col, PageHeader, Descriptions } from 'antd';
+import { Row, Col, PageHeader, Descriptions, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 import AuthContext from '../../contexts/auth/authContext';
 
@@ -25,7 +26,13 @@ const Profile = () => {
           className='site-page-header-responsive'
           onBack={() => window.history.back()}
           title={name}
-          extra={[<EditProfileModal />, <ChangePasswordModal />]}
+          extra={[
+            <Button type='primary'>
+              <Link to='/transactions'>Transactions</Link>
+            </Button>,
+            <EditProfileModal />,
+            <ChangePasswordModal />,
+          ]}
         >
           <Descriptions size='small' column={1}>
             <Descriptions.Item label='Email'>{email}</Descriptions.Item>

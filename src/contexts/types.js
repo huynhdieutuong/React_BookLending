@@ -19,3 +19,7 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const CHANGE_AVATAR = 'CHANGE_AVATAR';
 export const LOADING_AVATAR = 'LOADING_AVATAR';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+
+// Transaction
+export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+export const GET_TRANSACTION = 'GET_TRANSACTION';

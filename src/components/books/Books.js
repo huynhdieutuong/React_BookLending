@@ -35,7 +35,7 @@ const Books = ({ location }) => {
       <Row justify='end' style={{ marginTop: '20px' }}>
         <Pagination
           pagination={pagination}
-          getBooks={getBooks}
+          getData={getBooks}
           textSearch={textSearch}
         />
       </Row>

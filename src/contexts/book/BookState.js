@@ -20,7 +20,7 @@ const BookState = (props) => {
   const setLoading = () => dispatch({ type: SET_LOADING });
 
   // Get books
-  const getBooks = async (text = '', page = 1, perPage = 5) => {
+  const getBooks = async (text = '', page = 1, perPage = 10) => {
     setLoading();
 
     const res = await axios.get(

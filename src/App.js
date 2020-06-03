@@ -6,6 +6,7 @@ import './App.css';
 import AlertState from './contexts/alert/AlertState';
 import BookState from './contexts/book/BookState';
 import AuthState from './contexts/auth/AuthState';
+import TransactionState from './contexts/transaction/TransactionState';
 
 // Routes
 import DefaultLayoutRoute from './components/routing/DefaultLayoutRoute';
@@ -18,35 +19,47 @@ import SingleBook from './components/books/SingleBook';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Profile from './components/profile/Profile';
+import Transactions from './components/transaction/Transactions';
 
 const App = () => {
   return (
     <AlertState>
       <AuthState>
-        <BookState>
-          <Router>
-            <Switch>
-              <DefaultLayoutRoute exact path='/' component={Books} />
-              <DefaultLayoutRoute exact path='/search' component={Books} />
-              <DefaultLayoutRoute
-                exact
-                path='/books/:id'
-                component={SingleBook}
-              />
-              <PublicDefaultLayoutRoute exact path='/login' component={Login} />
-              <PublicDefaultLayoutRoute
-                exact
-                path='/register'
-                component={Register}
-              />
-              <PrivateDefaultLayoutRoute
-                exact
-                path='/profile'
-                component={Profile}
-              />
-            </Switch>
-          </Router>
-        </BookState>
+        <TransactionState>
+          <BookState>
+            <Router>
+              <Switch>
+                <DefaultLayoutRoute exact path='/' component={Books} />
+                <DefaultLayoutRoute exact path='/search' component={Books} />
+                <DefaultLayoutRoute
+                  exact
+                  path='/books/:id'
+                  component={SingleBook}
+                />
+                <PublicDefaultLayoutRoute
+                  exact
+                  path='/login'
+                  component={Login}
+                />
+                <PublicDefaultLayoutRoute
+                  exact
+                  path='/register'
+                  component={Register}
+                />
+                <PrivateDefaultLayoutRoute
+                  exact
+                  path='/profile'
+                  component={Profile}
+                />
+                <PrivateDefaultLayoutRoute
+                  exact
+                  path='/transactions'
+                  component={Transactions}
+                />
+              </Switch>
+            </Router>
+          </BookState>
+        </TransactionState>
       </AuthState>
     </AlertState>
   );
