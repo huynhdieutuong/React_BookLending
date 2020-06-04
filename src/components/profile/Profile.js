@@ -4,17 +4,14 @@ import { Link } from 'react-router-dom';
 
 import AuthContext from '../../contexts/auth/authContext';
 
-import Spinner from '../layouts/Spinner';
 import ChangeAvatar from './ChangeAvatar';
 import EditProfileModal from './EditProfileModal';
 import ChangePasswordModal from './ChangePasswordModal';
 
 const Profile = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { email, name, phone } = user;
-
-  if (loading) return <Spinner />;
 
   return (
     <Row>
