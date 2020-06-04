@@ -1,4 +1,9 @@
-import { SET_LOADING, GET_TRANSACTIONS, GET_TRANSACTION } from '../types';
+import {
+  SET_LOADING,
+  GET_TRANSACTIONS,
+  GET_TRANSACTION,
+  NOT_FOUND,
+} from '../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -20,6 +25,12 @@ export default (state, action) => {
       return {
         ...state,
         transaction: payload,
+        loading: false,
+      };
+    case NOT_FOUND:
+      return {
+        ...state,
+        transaction: null,
         loading: false,
       };
     default:

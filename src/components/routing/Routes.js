@@ -15,13 +15,15 @@ import Register from '../auth/Register';
 import Profile from '../profile/Profile';
 import Transactions from '../transaction/Transactions';
 import SingleTransaction from '../transaction/SingleTransaction';
+
 import NotFound from '../layouts/NotFound';
+import Spinner from '../layouts/Spinner';
 
 import AuthContext from '../../contexts/auth/authContext';
 import AlertContext from '../../contexts/alert/alertContext';
 
 const Routes = () => {
-  const { loadUser } = useContext(AuthContext);
+  const { loadUser, loading } = useContext(AuthContext);
   const { alerts, type, setAlert } = useContext(AlertContext);
 
   useEffect(() => {
@@ -33,6 +35,8 @@ const Routes = () => {
     alerts.length > 0 && alerts.map((alert) => message[type](alert));
     // eslint-disable-next-line
   }, [setAlert]);
+
+  if (loading) return <Spinner />;
 
   return (
     <Switch>

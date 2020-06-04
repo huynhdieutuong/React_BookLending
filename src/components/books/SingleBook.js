@@ -1,16 +1,18 @@
 import React, { useEffect, useContext } from 'react';
 import { Row, Col, PageHeader, Tabs, Button } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 
 import BookContext from '../../contexts/book/bookContext';
+import AuthContext from '../../contexts/auth/authContext';
 
 import Spinner from '../layouts/Spinner';
+import NotFound from '../layouts/NotFound';
 
 const { TabPane } = Tabs;
 
 const SingleBook = ({ match }) => {
   const { book, loading, getBook } = useContext(BookContext);
-
-  const { _id, coverUrl, title, description } = book;
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getBook(match.params.id);
@@ -18,6 +20,10 @@ const SingleBook = ({ match }) => {
   }, []);
 
   if (loading) return <Spinner />;
+
+  if (!book) return <NotFound />;
+
+  const { _id, coverUrl, title, description } = book;
 
   return (
     <Row>
@@ -29,15 +35,26 @@ const SingleBook = ({ match }) => {
           className='site-page-header-responsive'
           onBack={() => window.history.back()}
           title={title}
-          extra={[
-            <Button key='3'>Edit</Button>,
-            <Button key='2' type='danger'>
-              Delete
-            </Button>,
-            <Button key='1' type='primary'>
-              Borrow
-            </Button>,
-          ]}
+          extra={
+            user.isAdmin
+              ? [
+                  <Button key='3' type='primary'>
+                    Edit
+                  </Button>,
+                  <Button key='2' type='danger'>
+                    Delete
+                  </Button>,
+                ]
+              : [
+                  <Button
+                    icon={<ShoppingCartOutlined />}
+                    key='1'
+                    type='primary'
+                  >
+                    Pick to Borrow
+                  </Button>,
+                ]
+          }
           footer={
             <Tabs defaultActiveKey='1'>
               <TabPane tab='Details' key='1' />

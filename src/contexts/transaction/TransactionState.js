@@ -1,7 +1,12 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
 
-import { SET_LOADING, GET_TRANSACTIONS, GET_TRANSACTION } from '../types';
+import {
+  SET_LOADING,
+  GET_TRANSACTIONS,
+  GET_TRANSACTION,
+  NOT_FOUND,
+} from '../types';
 
 import TransactionContext from './transactionContext';
 import TransactionReducer from './transactionReducer';
@@ -10,7 +15,7 @@ const TransactionState = (props) => {
   const initialState = {
     loading: false,
     transactions: [],
-    transaction: null,
+    transaction: {},
     pagination: {},
     daysBorrow: 14 * 24 * 60 * 60 * 1000,
   };
@@ -40,12 +45,18 @@ const TransactionState = (props) => {
   const getTransaction = async (id) => {
     setLoading();
 
-    const res = await axios.get(`/api/transactions/${id}/view`);
+    try {
+      const res = await axios.get(`/api/transactions/${id}/view`);
 
-    dispatch({
-      type: GET_TRANSACTION,
-      payload: res.data,
-    });
+      dispatch({
+        type: GET_TRANSACTION,
+        payload: res.data,
+      });
+    } catch (err) {
+      if (err.response.status === 404) {
+        dispatch({ type: NOT_FOUND });
+      }
+    }
   };
 
   return (

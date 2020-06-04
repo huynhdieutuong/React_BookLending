@@ -1,4 +1,5 @@
 export const SET_LOADING = 'SET_LOADING';
+export const NOT_FOUND = 'NOT_FOUND';
 
 // Alert
 export const SET_ALERT = 'SET_ALERT';

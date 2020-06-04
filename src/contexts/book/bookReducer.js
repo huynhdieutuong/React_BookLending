@@ -1,4 +1,4 @@
-import { SET_LOADING, GET_BOOKS, GET_BOOK } from '../types';
+import { SET_LOADING, GET_BOOKS, GET_BOOK, NOT_FOUND } from '../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -20,6 +20,12 @@ export default (state, action) => {
       return {
         ...state,
         book: payload,
+        loading: false,
+      };
+    case NOT_FOUND:
+      return {
+        ...state,
+        book: null,
         loading: false,
       };
     default:

@@ -7,6 +7,7 @@ import TransactionContext from '../../contexts/transaction/transactionContext';
 import AuthContext from '../../contexts/auth/authContext';
 
 import Spinner from '../layouts/Spinner';
+import NotFound from '../layouts/NotFound';
 
 const SingleTransaction = ({ match }) => {
   const { transaction, loading, getTransaction, daysBorrow } = useContext(
@@ -19,7 +20,9 @@ const SingleTransaction = ({ match }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (!transaction || loading) return <Spinner />;
+  if (loading) return <Spinner />;
+
+  if (!transaction) return <NotFound />;
 
   const { _id, books, user, date, isComplete } = transaction;
 
@@ -52,7 +55,9 @@ const SingleTransaction = ({ match }) => {
         >
           <Descriptions size='small' column={1}>
             {authState.user.isAdmin && (
-              <Descriptions.Item label='User'>{user}</Descriptions.Item>
+              <Descriptions.Item label='User'>
+                {user && <Link to={`/users/${user._id}`}>{user.name}</Link>}
+              </Descriptions.Item>
             )}
             <Descriptions.Item label='Status'>
               {' '}
@@ -72,17 +77,22 @@ const SingleTransaction = ({ match }) => {
       </Col>
       <Col span={16}>
         <Row gutter={8}>
-          {books.map((book) => (
-            <Col span={6} style={{ height: 200, margin: '5px 0' }}>
-              <Link to={`/books/${book._id}`}>
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src={book.coverUrl}
-                  alt={book.title}
-                />
-              </Link>
-            </Col>
-          ))}
+          {books &&
+            books.map((book) => (
+              <Col
+                span={6}
+                style={{ height: 200, margin: '5px 0' }}
+                key={book._id}
+              >
+                <Link to={`/books/${book._id}`}>
+                  <img
+                    style={{ width: '100%', height: '100%' }}
+                    src={book.coverUrl}
+                    alt={book.title}
+                  />
+                </Link>
+              </Col>
+            ))}
         </Row>
       </Col>
     </Row>
