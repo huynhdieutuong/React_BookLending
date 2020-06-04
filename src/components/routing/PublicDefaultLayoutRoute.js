@@ -8,16 +8,14 @@ import AuthContext from '../../contexts/auth/authContext';
 const PrivateDefaultLayoutRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated } = useContext(AuthContext);
 
+  if (isAuthenticated) return <Redirect to='/profile' />;
+
   return (
     <Route
       {...rest}
       render={(props) => (
         <DefaultLayout>
-          {isAuthenticated ? (
-            <Redirect to='/profile' />
-          ) : (
-            <Component {...props} />
-          )}
+          <Component {...props} />
         </DefaultLayout>
       )}
     />
