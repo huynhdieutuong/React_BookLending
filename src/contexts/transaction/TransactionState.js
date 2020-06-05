@@ -9,6 +9,8 @@ import {
   LOAD_ADMIN_DATAS,
   CREATE_TRANSACTION,
   DELETE_TRANSACTION,
+  EDIT_TRANSACTION,
+  EDIT_TRANSACTION_SINGLE,
 } from '../types';
 
 import TransactionContext from './transactionContext';
@@ -110,13 +112,41 @@ const TransactionState = (props) => {
   };
 
   // Delete Transaction
-  const deleteTransaction = async (id) => {
+  const deleteTransaction = async (id, history) => {
     try {
       await axios.delete(`/api/transactions/${id}/delete`);
 
       dispatch({
         type: DELETE_TRANSACTION,
         payload: id,
+      });
+
+      if (history) {
+        history.push('/transactions');
+      }
+    } catch (err) {
+      console.error(err.response);
+    }
+  };
+
+  // Edit Transaction
+  const editTransaction = async (id, formData, single = false) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/transactions/${id}/edit`,
+        formData,
+        config
+      );
+
+      dispatch({
+        type: single ? EDIT_TRANSACTION_SINGLE : EDIT_TRANSACTION,
+        payload: res.data,
       });
     } catch (err) {
       console.error(err.response);
@@ -137,6 +167,7 @@ const TransactionState = (props) => {
         loadAdminDatas,
         createTransaction,
         deleteTransaction,
+        editTransaction,
       }}
     >
       {props.children}

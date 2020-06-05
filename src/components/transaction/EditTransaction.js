@@ -7,7 +7,7 @@ import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const { Option } = Select;
 
-const EditTransaction = ({ setVisible }) => {
+const EditTransaction = ({ setVisible, transaction, single }) => {
   const { editTransaction, loadAdminDatas, adminDatas } = useContext(
     TransactionContext
   );
@@ -22,7 +22,7 @@ const EditTransaction = ({ setVisible }) => {
     const hide = message.loading('Action in progress..', 0);
 
     setDisabled(true);
-    await editTransaction({ user, books });
+    await editTransaction(transaction._id, { user, books }, single);
 
     setTimeout(hide, 0);
     setVisible(false);
@@ -43,6 +43,10 @@ const EditTransaction = ({ setVisible }) => {
       name='normal_login'
       className='login-form'
       onFinish={onFinish}
+      initialValues={{
+        user: transaction.user._id,
+        books: transaction.books.map((book) => `${book._id} - ${book.title}`),
+      }}
     >
       <Form.Item
         name='user'

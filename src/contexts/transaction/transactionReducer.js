@@ -6,6 +6,8 @@ import {
   LOAD_ADMIN_DATAS,
   CREATE_TRANSACTION,
   DELETE_TRANSACTION,
+  EDIT_TRANSACTION,
+  EDIT_TRANSACTION_SINGLE,
 } from '../types';
 
 export default (state, action) => {
@@ -52,6 +54,18 @@ export default (state, action) => {
         transactions: state.transactions.filter(
           (transaction) => transaction._id !== payload
         ),
+      };
+    case EDIT_TRANSACTION:
+      return {
+        ...state,
+        transactions: state.transactions.map((transaction) =>
+          transaction._id === payload._id ? payload : transaction
+        ),
+      };
+    case EDIT_TRANSACTION_SINGLE:
+      return {
+        ...state,
+        transaction: payload,
       };
     default:
       return state;

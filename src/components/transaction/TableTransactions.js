@@ -74,7 +74,7 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
             </Button>
           </Col>
           <Col flex='30%' style={{ marginBottom: '5px', marginRight: '5px' }}>
-            {isAdmin && <EditTransactionModal />}
+            {isAdmin && <EditTransactionModal transaction={transaction} />}
           </Col>
           <Col flex='30%'>
             {isAdmin && <DeleteTransaction id={transaction._id} />}

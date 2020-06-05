@@ -3,7 +3,7 @@ import { Button, message, Popconfirm } from 'antd';
 
 import TransactionContext from '../../contexts/transaction/transactionContext';
 
-const DeleteTransaction = ({ id }) => {
+const DeleteTransaction = ({ id, history }) => {
   const { deleteTransaction } = useContext(TransactionContext);
   const [disabled, setDisabled] = useState(false);
 
@@ -11,7 +11,7 @@ const DeleteTransaction = ({ id }) => {
     const hide = message.loading('Action in progress..', 0);
 
     setDisabled(true);
-    await deleteTransaction(id);
+    await deleteTransaction(id, history);
 
     setDisabled(false);
     setTimeout(hide, 0);

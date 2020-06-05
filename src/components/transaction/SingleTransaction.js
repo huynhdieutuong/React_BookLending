@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Row, Col, PageHeader, Button, Descriptions, Tag } from 'antd';
+import { Row, Col, PageHeader, Descriptions, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
@@ -9,7 +9,10 @@ import AuthContext from '../../contexts/auth/authContext';
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
 
-const SingleTransaction = ({ match }) => {
+import DeleteTransaction from './DeleteTransaction';
+import EditTransactionModal from './EditTransactionModal';
+
+const SingleTransaction = ({ match, history }) => {
   const { transaction, loading, getTransaction, daysBorrow } = useContext(
     TransactionContext
   );
@@ -44,12 +47,8 @@ const SingleTransaction = ({ match }) => {
           title={_id}
           extra={
             authState.user.isAdmin && [
-              <Button key='3' type='primary'>
-                Edit
-              </Button>,
-              <Button key='2' type='danger'>
-                Delete
-              </Button>,
+              <EditTransactionModal transaction={transaction} single={true} />,
+              <DeleteTransaction id={_id} history={history} />,
             ]
           }
         >

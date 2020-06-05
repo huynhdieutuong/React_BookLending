@@ -3,7 +3,7 @@ import { Modal, Button } from 'antd';
 
 import EditTransaction from './EditTransaction';
 
-const EditTransactionModal = () => {
+const EditTransactionModal = ({ transaction, single }) => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -17,7 +17,11 @@ const EditTransactionModal = () => {
         onCancel={() => setVisible(false)}
         footer={null}
       >
-        <EditTransaction setVisible={setVisible} />
+        <EditTransaction
+          setVisible={setVisible}
+          transaction={transaction}
+          single={single}
+        />
       </Modal>
     </Fragment>
   );
