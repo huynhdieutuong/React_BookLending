@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Form, Select, Button, message } from 'antd';
+import { Form, Select, Button, message, Checkbox } from 'antd';
 
 import Spinner from '../layouts/Spinner';
 
@@ -16,13 +16,15 @@ const EditTransaction = ({ setVisible, transaction, single }) => {
   const formRef = useRef('');
 
   const onFinish = async (values) => {
-    let { user, books } = values;
+    let { user, books, isComplete } = values;
+
     books = books.map((book) => book.slice(0, 24));
+    isComplete = JSON.stringify(isComplete);
 
     const hide = message.loading('Action in progress..', 0);
 
     setDisabled(true);
-    await editTransaction(transaction._id, { user, books }, single);
+    await editTransaction(transaction._id, { user, books, isComplete }, single);
 
     setTimeout(hide, 0);
     setVisible(false);
@@ -46,6 +48,7 @@ const EditTransaction = ({ setVisible, transaction, single }) => {
       initialValues={{
         user: transaction.user._id,
         books: transaction.books.map((book) => `${book._id} - ${book.title}`),
+        isComplete: transaction.isComplete,
       }}
     >
       <Form.Item
@@ -85,6 +88,10 @@ const EditTransaction = ({ setVisible, transaction, single }) => {
             </Option>
           ))}
         </Select>
+      </Form.Item>
+
+      <Form.Item name='isComplete' valuePropName='checked'>
+        <Checkbox>Mark as Completed</Checkbox>
       </Form.Item>
 
       <Form.Item style={{ marginBottom: '0' }}>
