@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import React, { useContext, useState } from 'react';
+import { Form, Input, Button, message } from 'antd';
 import {
   MailOutlined,
   LockOutlined,
@@ -11,28 +11,24 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../../contexts/auth/authContext';
 
 const Register = () => {
-  useEffect(() => {
-    localStorage.removeItem('formData');
-  }, []);
-
   const { register } = useContext(AuthContext);
 
-  const onFinish = (values) => {
+  const [disabled, setDisabled] = useState(false);
+
+  const onFinish = async (values) => {
     const { email, name, phone, password, password2 } = values;
+    const hide = message.loading('Action in progress..', 0);
 
-    localStorage.setItem('formData', JSON.stringify(values));
+    setDisabled(true);
+    await register(email, name, phone, password, password2);
 
-    register(email, name, phone, password, password2);
+    setTimeout(hide, 0);
+    setDisabled(false);
   };
 
   return (
     <div className='wrapper-form'>
-      <Form
-        name='normal_login'
-        className='login-form'
-        initialValues={JSON.parse(localStorage.getItem('formData'))}
-        onFinish={onFinish}
-      >
+      <Form name='normal_login' className='login-form' onFinish={onFinish}>
         <h2>Register</h2>
         <Form.Item
           name='email'
@@ -88,6 +84,7 @@ const Register = () => {
             type='primary'
             htmlType='submit'
             className='login-form-button'
+            disabled={disabled}
           >
             Register
           </Button>

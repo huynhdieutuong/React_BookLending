@@ -1,33 +1,29 @@
-import React, { useContext, useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import React, { useContext, useState } from 'react';
+import { Form, Input, Button, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 import AuthContext from '../../contexts/auth/authContext';
 
 const Login = () => {
-  useEffect(() => {
-    localStorage.removeItem('formData');
-  }, []);
-
   const { login } = useContext(AuthContext);
 
-  const onFinish = (values) => {
+  const [disabled, setDisabled] = useState(false);
+
+  const onFinish = async (values) => {
     const { email, password } = values;
+    const hide = message.loading('Action in progress..', 0);
 
-    localStorage.setItem('formData', JSON.stringify(values));
+    setDisabled(true);
+    await login(email, password);
 
-    login(email, password);
+    setTimeout(hide, 0);
+    setDisabled(false);
   };
 
   return (
     <div className='wrapper-form'>
-      <Form
-        name='normal_login'
-        className='login-form'
-        initialValues={JSON.parse(localStorage.getItem('formData'))}
-        onFinish={onFinish}
-      >
+      <Form name='normal_login' className='login-form' onFinish={onFinish}>
         <h2>Login</h2>
         <Form.Item
           name='email'
@@ -54,6 +50,7 @@ const Login = () => {
             type='primary'
             htmlType='submit'
             className='login-form-button'
+            disabled={disabled}
           >
             Log in
           </Button>
