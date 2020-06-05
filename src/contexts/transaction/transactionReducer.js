@@ -6,6 +6,7 @@ import {
   SET_LOADING_MODAL,
   LOAD_ADMIN_DATAS,
   CREATE_TRANSACTION,
+  DELETE_TRANSACTION,
 } from '../types';
 
 export default (state, action) => {
@@ -51,6 +52,13 @@ export default (state, action) => {
       return {
         ...state,
         transactions: [payload, ...state.transactions],
+      };
+    case DELETE_TRANSACTION:
+      return {
+        ...state,
+        transactions: state.transactions.filter(
+          (transaction) => transaction._id !== payload
+        ),
       };
     default:
       return state;

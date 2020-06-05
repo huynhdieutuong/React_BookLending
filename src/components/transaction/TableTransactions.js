@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
-import { Table, Tag, Space, Button } from 'antd';
+import React, { useContext, useState } from 'react';
+import { Table, Tag, Space, Button, message } from 'antd';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const TableTransactions = ({ dataSource, isAdmin }) => {
-  const { daysBorrow } = useContext(TransactionContext);
+  const { daysBorrow, deleteTransaction } = useContext(TransactionContext);
+  const [disabled, setDisabled] = useState(false);
 
   const columns = [
     {
@@ -66,7 +67,24 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
             <Link to={`/transactions/${transaction._id}`}>View</Link>
           </Button>
           {isAdmin && <Button type='ghost'>Edit</Button>}
-          {isAdmin && <Button type='danger'>Delete</Button>}
+          {isAdmin && (
+            <Button
+              type='danger'
+              disabled={disabled}
+              onClick={async () => {
+                const hide = message.loading('Action in progress..', 0);
+
+                setDisabled(true);
+                await deleteTransaction(transaction._id);
+
+                setDisabled(false);
+                setTimeout(hide, 0);
+                message.success(`Transaction ${transaction._id} deleted`);
+              }}
+            >
+              Delete
+            </Button>
+          )}
         </Space>
       ),
     },

@@ -9,6 +9,7 @@ import {
   SET_LOADING_MODAL,
   LOAD_ADMIN_DATAS,
   CREATE_TRANSACTION,
+  DELETE_TRANSACTION,
 } from '../types';
 
 import TransactionContext from './transactionContext';
@@ -116,6 +117,20 @@ const TransactionState = (props) => {
     }
   };
 
+  // Delete Transaction
+  const deleteTransaction = async (id) => {
+    try {
+      await axios.delete(`/api/transactions/${id}/delete`);
+
+      dispatch({
+        type: DELETE_TRANSACTION,
+        payload: id,
+      });
+    } catch (err) {
+      console.error(err.response);
+    }
+  };
+
   return (
     <TransactionContext.Provider
       value={{
@@ -130,6 +145,7 @@ const TransactionState = (props) => {
         getTransaction,
         loadAdminDatas,
         createTransaction,
+        deleteTransaction,
       }}
     >
       {props.children}
