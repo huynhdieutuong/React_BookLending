@@ -13,6 +13,22 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
 
   const columns = [
     {
+      title: isAdmin ? 'ID / User' : 'ID',
+      key: 'iduser',
+      render: (transaction) => (
+        <>
+          {<p>{transaction._id}</p>}
+          {isAdmin && (
+            <p>
+              <Link to={`/users/${transaction.user._id}`}>
+                {transaction.user.name}
+              </Link>
+            </p>
+          )}
+        </>
+      ),
+    },
+    {
       title: 'Books',
       dataIndex: 'books',
       key: 'books',
@@ -83,17 +99,6 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
       ),
     },
   ];
-
-  if (isAdmin) {
-    columns.unshift({
-      title: 'User',
-      dataIndex: 'user',
-      key: 'user',
-      render: (user) => (
-        <>{<Link to={`/users/${user._id}`}>{user.name}</Link>}</>
-      ),
-    });
-  }
 
   return <Table columns={columns} dataSource={dataSource} pagination={false} />;
 };

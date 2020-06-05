@@ -8,6 +8,7 @@ import Spinner from '../layouts/Spinner';
 import Pagination from '../layouts/Pagination';
 import TableTransactions from './TableTransactions';
 import CreateTransactionModal from './CreateTransactionModal';
+import SubSearchBar from '../layouts/SubSearchBar';
 
 const Transactions = () => {
   const { transactions, pagination, loading, getTransactions } = useContext(
@@ -15,6 +16,8 @@ const Transactions = () => {
   );
 
   const { user } = useContext(AuthContext);
+
+  const textSubSearch = localStorage.getItem('textSubSearch') || '';
 
   useEffect(() => {
     getTransactions();
@@ -31,8 +34,16 @@ const Transactions = () => {
           onBack={() => window.history.back()}
           title='Transactions'
           extra={[
+            <SubSearchBar
+              placeholder="Type transaction's ID"
+              getData={getTransactions}
+            />,
             user.isAdmin && <CreateTransactionModal />,
-            <Pagination pagination={pagination} getData={getTransactions} />,
+            <Pagination
+              pagination={pagination}
+              getData={getTransactions}
+              textSearch={textSubSearch}
+            />,
           ]}
         >
           <TableTransactions dataSource={transactions} isAdmin={user.isAdmin} />
