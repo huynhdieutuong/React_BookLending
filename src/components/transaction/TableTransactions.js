@@ -1,25 +1,30 @@
-import React, { useContext, useState } from 'react';
-import { Table, Tag, Space, Button, message } from 'antd';
+import React, { useContext } from 'react';
+import { Table, Tag, Row, Col, Button } from 'antd';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
+
+import EditTransactionModal from './EditTransactionModal';
+import DeleteTransaction from './DeleteTransaction';
 
 import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const TableTransactions = ({ dataSource, isAdmin }) => {
-  const { daysBorrow, deleteTransaction } = useContext(TransactionContext);
-  const [disabled, setDisabled] = useState(false);
+  const { daysBorrow } = useContext(TransactionContext);
 
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: '_id',
-      key: '_id',
-    },
     {
       title: 'Books',
       dataIndex: 'books',
       key: 'books',
-      render: (books) => <>{books.length}</>,
+      render: (books) => (
+        <>
+          {books.map((book, index) => (
+            <p style={{ maxWidth: '300px' }}>
+              {index + 1} - {book.title}
+            </p>
+          ))}
+        </>
+      ),
     },
     {
       title: 'Status',
@@ -62,39 +67,31 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
       title: 'Action',
       key: 'action',
       render: (transaction) => (
-        <Space size='middle'>
-          <Button type='primary'>
-            <Link to={`/transactions/${transaction._id}`}>View</Link>
-          </Button>
-          {isAdmin && <Button type='ghost'>Edit</Button>}
-          {isAdmin && (
-            <Button
-              type='danger'
-              disabled={disabled}
-              onClick={async () => {
-                const hide = message.loading('Action in progress..', 0);
-
-                setDisabled(true);
-                await deleteTransaction(transaction._id);
-
-                setDisabled(false);
-                setTimeout(hide, 0);
-                message.success(`Transaction ${transaction._id} deleted`);
-              }}
-            >
-              Delete
+        <Row size='middle'>
+          <Col flex='30%' style={{ marginBottom: '5px', marginRight: '5px' }}>
+            <Button type='primary'>
+              <Link to={`/transactions/${transaction._id}`}>View</Link>
             </Button>
-          )}
-        </Space>
+          </Col>
+          <Col flex='30%' style={{ marginBottom: '5px', marginRight: '5px' }}>
+            {isAdmin && <EditTransactionModal />}
+          </Col>
+          <Col flex='30%'>
+            {isAdmin && <DeleteTransaction id={transaction._id} />}
+          </Col>
+        </Row>
       ),
     },
   ];
 
   if (isAdmin) {
-    columns.splice(2, 0, {
+    columns.unshift({
       title: 'User',
       dataIndex: 'user',
       key: 'user',
+      render: (user) => (
+        <>{<Link to={`/users/${user._id}`}>{user.name}</Link>}</>
+      ),
     });
   }
 

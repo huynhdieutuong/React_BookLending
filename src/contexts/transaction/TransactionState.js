@@ -6,7 +6,6 @@ import {
   GET_TRANSACTIONS,
   GET_TRANSACTION,
   NOT_FOUND,
-  SET_LOADING_MODAL,
   LOAD_ADMIN_DATAS,
   CREATE_TRANSACTION,
   DELETE_TRANSACTION,
@@ -18,7 +17,6 @@ import TransactionReducer from './transactionReducer';
 const TransactionState = (props) => {
   const initialState = {
     loading: false,
-    loadingModal: false,
     transactions: [],
     transaction: {},
     pagination: {},
@@ -30,7 +28,6 @@ const TransactionState = (props) => {
 
   const {
     loading,
-    loadingModal,
     transactions,
     transaction,
     pagination,
@@ -40,9 +37,6 @@ const TransactionState = (props) => {
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
-
-  // Set Loading Modal
-  const setLoadingModal = () => dispatch({ type: SET_LOADING_MODAL });
 
   // Get Transactions
   const getTransactions = async (text = '', page = 1, perPage = 5) => {
@@ -78,8 +72,6 @@ const TransactionState = (props) => {
 
   // Load admin datas
   const loadAdminDatas = async () => {
-    setLoadingModal();
-
     try {
       const res1 = await axios.get('/api/users');
       const res2 = await axios.get('/api/books');
@@ -135,7 +127,6 @@ const TransactionState = (props) => {
     <TransactionContext.Provider
       value={{
         loading,
-        loadingModal,
         transactions,
         transaction,
         pagination,

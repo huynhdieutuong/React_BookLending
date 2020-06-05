@@ -7,8 +7,8 @@ import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const { Option } = Select;
 
-const CreateTransaction = ({ setVisible }) => {
-  const { createTransaction, loadAdminDatas, adminDatas } = useContext(
+const EditTransaction = ({ setVisible }) => {
+  const { editTransaction, loadAdminDatas, adminDatas } = useContext(
     TransactionContext
   );
 
@@ -22,7 +22,7 @@ const CreateTransaction = ({ setVisible }) => {
     const hide = message.loading('Action in progress..', 0);
 
     setDisabled(true);
-    await createTransaction({ user, books });
+    await editTransaction({ user, books });
 
     setTimeout(hide, 0);
     setVisible(false);
@@ -90,11 +90,11 @@ const CreateTransaction = ({ setVisible }) => {
           className='login-form-button'
           disabled={disabled}
         >
-          Create
+          Update
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default CreateTransaction;
+export default EditTransaction;
