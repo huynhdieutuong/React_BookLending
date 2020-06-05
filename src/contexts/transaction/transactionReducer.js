@@ -3,6 +3,9 @@ import {
   GET_TRANSACTIONS,
   GET_TRANSACTION,
   NOT_FOUND,
+  SET_LOADING_MODAL,
+  LOAD_ADMIN_DATAS,
+  CREATE_TRANSACTION,
 } from '../types';
 
 export default (state, action) => {
@@ -13,6 +16,11 @@ export default (state, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case SET_LOADING_MODAL:
+      return {
+        ...state,
+        loadingModal: true,
       };
     case GET_TRANSACTIONS:
       return {
@@ -32,6 +40,17 @@ export default (state, action) => {
         ...state,
         transaction: null,
         loading: false,
+      };
+    case LOAD_ADMIN_DATAS:
+      return {
+        ...state,
+        loadingModal: false,
+        adminDatas: payload,
+      };
+    case CREATE_TRANSACTION:
+      return {
+        ...state,
+        transactions: [payload, ...state.transactions],
       };
     default:
       return state;

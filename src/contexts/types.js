@@ -1,4 +1,5 @@
 export const SET_LOADING = 'SET_LOADING';
+export const SET_LOADING_MODAL = 'SET_LOADING_MODAL';
 export const NOT_FOUND = 'NOT_FOUND';
 
 // Alert
@@ -24,3 +25,5 @@ export const EDIT_PROFILE = 'EDIT_PROFILE';
 // Transaction
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 export const GET_TRANSACTION = 'GET_TRANSACTION';
+export const LOAD_ADMIN_DATAS = 'LOAD_ADMIN_DATAS';
+export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';

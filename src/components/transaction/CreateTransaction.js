@@ -1,17 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Form, Select, Button, message } from 'antd';
+
+import Spinner from '../layouts/Spinner';
 
 import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const { Option } = Select;
 
 const CreateTransaction = ({ setVisible }) => {
-  const { createTransaction } = useContext(TransactionContext);
+  const {
+    createTransaction,
+    loadingModal,
+    loadAdminDatas,
+    adminDatas,
+  } = useContext(TransactionContext);
 
   const [disabled, setDisabled] = useState(false);
+  const formRef = useRef('');
 
   const onFinish = async (values) => {
-    const { user, books } = values;
+    let { user, books } = values;
+    books = books.map((book) => book.slice(0, 24));
 
     const hide = message.loading('Action in progress..', 0);
 
@@ -21,10 +30,23 @@ const CreateTransaction = ({ setVisible }) => {
     setTimeout(hide, 0);
     setVisible(false);
     setDisabled(false);
+    formRef.current.resetFields();
   };
 
+  useEffect(() => {
+    loadAdminDatas();
+    // eslint-disable-next-line
+  }, []);
+
+  if (loadingModal || !adminDatas) return <Spinner />;
+
   return (
-    <Form name='normal_login' className='login-form' onFinish={onFinish}>
+    <Form
+      ref={formRef}
+      name='normal_login'
+      className='login-form'
+      onFinish={onFinish}
+    >
       <Form.Item
         name='user'
         hasFeedback
@@ -36,8 +58,12 @@ const CreateTransaction = ({ setVisible }) => {
         ]}
       >
         <Select placeholder='Please select an user'>
-          <Option value='china'>China</Option>
-          <Option value='usa'>U.S.A</Option>
+          {adminDatas.users.map((user) => (
+            <Option
+              key={user._id}
+              value={user._id}
+            >{`${user._id} - ${user.name}`}</Option>
+          ))}
         </Select>
       </Form.Item>
 
@@ -52,12 +78,11 @@ const CreateTransaction = ({ setVisible }) => {
         ]}
       >
         <Select mode='multiple' placeholder='Please select books'>
-          <Option value='red'>Red Red Red Red</Option>
-          <Option value='green'>Green Green Green Green</Option>
-          <Option value='blue'>Blue Blue Blue Blue</Option>
-          <Option value='yellow'>Yellow Yellow Yellow Yellow</Option>
-          <Option value='white'>White White White White</Option>
-          <Option value='black'>Black Black Black Black</Option>
+          {adminDatas.books.map((book) => (
+            <Option key={book._id} value={`${book._id} - ${book.title}`}>
+              {book.title}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
 
