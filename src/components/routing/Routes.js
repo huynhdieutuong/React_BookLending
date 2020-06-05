@@ -25,6 +25,7 @@ import AlertContext from '../../contexts/alert/alertContext';
 const Routes = () => {
   const { loadUser, user, loading } = useContext(AuthContext);
   const { alerts, type, setAlert } = useContext(AlertContext);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     loadUser();
@@ -36,7 +37,9 @@ const Routes = () => {
     // eslint-disable-next-line
   }, [setAlert]);
 
-  if (loading || !user) return <Spinner />;
+  if (token) {
+    if (loading || !user) return <Spinner />;
+  }
 
   return (
     <Switch>

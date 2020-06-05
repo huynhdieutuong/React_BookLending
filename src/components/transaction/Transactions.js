@@ -7,6 +7,7 @@ import AuthContext from '../../contexts/auth/authContext';
 import Spinner from '../layouts/Spinner';
 import Pagination from '../layouts/Pagination';
 import TableTransactions from './TableTransactions';
+import CreateTransactionModal from './CreateTransactionModal';
 
 const Transactions = () => {
   const { transactions, pagination, loading, getTransactions } = useContext(
@@ -30,6 +31,7 @@ const Transactions = () => {
           onBack={() => window.history.back()}
           title='Transactions'
           extra={[
+            user.isAdmin && <CreateTransactionModal />,
             <Pagination pagination={pagination} getData={getTransactions} />,
           ]}
         >
