@@ -9,6 +9,9 @@ import {
   NOT_FOUND,
   CREATE_BOOK,
   DELETE_BOOK,
+  EDIT_BOOK_SINGLE,
+  SET_BOOK,
+  EDIT_BOOK,
 } from '../types';
 
 const BookState = (props) => {
@@ -96,6 +99,38 @@ const BookState = (props) => {
     }
   };
 
+  // Set book
+  const setBook = (book) => {
+    dispatch({
+      type: SET_BOOK,
+      payload: book,
+    });
+  };
+
+  // Edit book
+  const editBook = async (book, formData, single = false) => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/books/${book._id}/edit`,
+        formData,
+        config
+      );
+
+      dispatch({
+        type: single ? EDIT_BOOK_SINGLE : EDIT_BOOK,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err.response);
+    }
+  };
+
   return (
     <BookContext.Provider
       value={{
@@ -107,6 +142,8 @@ const BookState = (props) => {
         getBook,
         createBook,
         deleteBook,
+        setBook,
+        editBook,
       }}
     >
       {props.children}

@@ -36,6 +36,8 @@ const CreateBook = ({ setVisible }) => {
     setVisible(false);
     setDisabled(false);
     formRef.current.resetFields();
+    setFile('');
+    setFileName('');
   };
 
   return (
@@ -56,7 +58,7 @@ const CreateBook = ({ setVisible }) => {
         name='description'
         rules={[{ required: true, message: 'Please input description!' }]}
       >
-        <Input.TextArea placeholder='Please input description' />
+        <Input.TextArea rows={8} placeholder='Please input description' />
       </Form.Item>
 
       <Form.Item name='cover'>

@@ -5,6 +5,9 @@ import {
   NOT_FOUND,
   CREATE_BOOK,
   DELETE_BOOK,
+  EDIT_BOOK,
+  EDIT_BOOK_SINGLE,
+  SET_BOOK,
 } from '../types';
 
 export default (state, action) => {
@@ -38,6 +41,19 @@ export default (state, action) => {
       return {
         ...state,
         books: state.books.filter((book) => book._id !== payload),
+      };
+    case EDIT_BOOK:
+      return {
+        ...state,
+        books: state.books.map((book) =>
+          book._id === payload._id ? payload : book
+        ),
+      };
+    case EDIT_BOOK_SINGLE:
+    case SET_BOOK:
+      return {
+        ...state,
+        book: payload,
       };
     case NOT_FOUND:
       return {

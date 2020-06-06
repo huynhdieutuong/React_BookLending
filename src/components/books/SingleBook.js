@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import { Row, Col, PageHeader, Tabs, Button } from 'antd';
+import React, { useEffect, useContext, useState } from 'react';
+import { Row, Col, PageHeader, Tabs, Button, Modal } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 
 import BookContext from '../../contexts/book/bookContext';
@@ -8,12 +8,14 @@ import AuthContext from '../../contexts/auth/authContext';
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
 import DeleteBook from './DeleteBook';
+import EditBook from './EditBook';
 
 const { TabPane } = Tabs;
 
 const SingleBook = ({ match, history }) => {
   const { book, loading, getBook } = useContext(BookContext);
   const { user } = useContext(AuthContext);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     getBook(match.params.id);
@@ -39,7 +41,7 @@ const SingleBook = ({ match, history }) => {
           extra={
             user.isAdmin
               ? [
-                  <Button key='3' type='primary'>
+                  <Button type='primary' onClick={() => setVisible(true)}>
                     Edit
                   </Button>,
                   <DeleteBook id={_id} history={history} />,
@@ -64,6 +66,14 @@ const SingleBook = ({ match, history }) => {
           {description}
         </PageHeader>
       </Col>
+      <Modal
+        title='Edit Book'
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        footer={null}
+      >
+        <EditBook setVisible={setVisible} single={true} />
+      </Modal>
     </Row>
   );
 };

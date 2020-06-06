@@ -1,12 +1,17 @@
-import React from 'react';
-import { Table, Row, Col, Button } from 'antd';
+import React, { Fragment, useState, useContext } from 'react';
+import { Table, Row, Col, Button, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
-import EditBookModal from './EditBookModal';
+import EditBook from './EditBook';
 import DeleteBook from './DeleteBook';
 
+import BookContext from '../../contexts/book/bookContext';
+
 const TableBooks = ({ dataSource }) => {
+  const { setBook } = useContext(BookContext);
+  const [visible, setVisible] = useState(false);
+
   const columns = [
     {
       title: 'Cover',
@@ -46,7 +51,15 @@ const TableBooks = ({ dataSource }) => {
             </Button>
           </Col>
           <Col flex='30%' style={{ marginBottom: '5px', marginRight: '5px' }}>
-            <EditBookModal book={book} />
+            <Button
+              type='primary'
+              onClick={() => {
+                setBook(book);
+                setVisible(true);
+              }}
+            >
+              Edit
+            </Button>
           </Col>
           <Col flex='30%'>
             <DeleteBook id={book._id} />
@@ -56,7 +69,21 @@ const TableBooks = ({ dataSource }) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Fragment>
+      <Table columns={columns} dataSource={dataSource} pagination={false} />{' '}
+      {visible && (
+        <Modal
+          title='Edit Book'
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+        >
+          <EditBook setVisible={setVisible} />
+        </Modal>
+      )}
+    </Fragment>
+  );
 };
 
 export default TableBooks;
