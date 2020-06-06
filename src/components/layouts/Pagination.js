@@ -28,7 +28,9 @@ const Pagination = ({
           <Radio.Button value={prev}>{prev}</Radio.Button>
         </Fragment>
       )}
-      <Radio.Button value={page}>{page}</Radio.Button>
+      <Radio.Button value={page} disabled>
+        {page}
+      </Radio.Button>
       {next && (
         <Fragment>
           <Radio.Button value={next}>{next}</Radio.Button>

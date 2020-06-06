@@ -15,6 +15,7 @@ import Register from '../auth/Register';
 import Profile from '../profile/Profile';
 import Transactions from '../transaction/Transactions';
 import SingleTransaction from '../transaction/SingleTransaction';
+import AdminBooks from '../books/AdminBooks';
 
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
@@ -59,6 +60,7 @@ const Routes = () => {
         path='/transactions/:id'
         component={SingleTransaction}
       />
+      <PrivateDefaultLayoutRoute exact path='/books' component={AdminBooks} />
       <Route component={NotFound} />
     </Switch>
   );

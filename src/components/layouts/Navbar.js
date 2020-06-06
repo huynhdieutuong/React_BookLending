@@ -7,6 +7,8 @@ import {
   ShoppingOutlined,
   UserOutlined,
   ScheduleOutlined,
+  BookOutlined,
+  UsergroupAddOutlined,
 } from '@ant-design/icons';
 
 import SearchBar from './SearchBar';
@@ -26,6 +28,7 @@ const Navbar = () => {
   const handleClick = (e) => {
     setCurrentMenu(e.key);
     localStorage.setItem('currentMenu', e.key);
+    localStorage.removeItem('textSubSearch');
   };
 
   return (
@@ -61,6 +64,16 @@ const Navbar = () => {
             <Menu.Item key='profile' icon={<UserOutlined />}>
               <Link to='/profile'>Profile</Link>
             </Menu.Item>
+            {user.isAdmin && (
+              <Menu.Item key='adminBooks' icon={<BookOutlined />}>
+                <Link to='/books'>Books</Link>
+              </Menu.Item>
+            )}
+            {user.isAdmin && (
+              <Menu.Item key='users' icon={<UsergroupAddOutlined />}>
+                <Link to='/users'>Users</Link>
+              </Menu.Item>
+            )}
             <Menu.Item key='transactions' icon={<ScheduleOutlined />}>
               <Link to='/transactions'>Transactions</Link>
             </Menu.Item>
