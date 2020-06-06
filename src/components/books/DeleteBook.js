@@ -20,7 +20,7 @@ const DeleteBook = ({ id, history }) => {
 
   return (
     <Popconfirm
-      title='Are you sure delete this Book?'
+      title='Are you sure delete this book?'
       onConfirm={confirm}
       okText='Yes'
       cancelText='No'

@@ -7,10 +7,11 @@ import AuthContext from '../../contexts/auth/authContext';
 
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
+import DeleteBook from './DeleteBook';
 
 const { TabPane } = Tabs;
 
-const SingleBook = ({ match }) => {
+const SingleBook = ({ match, history }) => {
   const { book, loading, getBook } = useContext(BookContext);
   const { user } = useContext(AuthContext);
 
@@ -41,9 +42,7 @@ const SingleBook = ({ match }) => {
                   <Button key='3' type='primary'>
                     Edit
                   </Button>,
-                  <Button key='2' type='danger'>
-                    Delete
-                  </Button>,
+                  <DeleteBook id={_id} history={history} />,
                 ]
               : [
                   <Button

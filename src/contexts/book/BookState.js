@@ -8,6 +8,7 @@ import {
   GET_BOOK,
   NOT_FOUND,
   CREATE_BOOK,
+  DELETE_BOOK,
 } from '../types';
 
 const BookState = (props) => {
@@ -77,6 +78,24 @@ const BookState = (props) => {
     }
   };
 
+  // Delete Book
+  const deleteBook = async (id, history) => {
+    try {
+      await axios.delete(`/api/books/${id}/delete`);
+
+      dispatch({
+        type: DELETE_BOOK,
+        payload: id,
+      });
+
+      if (history) {
+        history.push('/books');
+      }
+    } catch (err) {
+      console.error(err.response);
+    }
+  };
+
   return (
     <BookContext.Provider
       value={{
@@ -87,6 +106,7 @@ const BookState = (props) => {
         getBooks,
         getBook,
         createBook,
+        deleteBook,
       }}
     >
       {props.children}

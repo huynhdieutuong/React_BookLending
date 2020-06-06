@@ -4,6 +4,7 @@ import {
   GET_BOOK,
   NOT_FOUND,
   CREATE_BOOK,
+  DELETE_BOOK,
 } from '../types';
 
 export default (state, action) => {
@@ -32,6 +33,11 @@ export default (state, action) => {
       return {
         ...state,
         books: [payload, ...state.books],
+      };
+    case DELETE_BOOK:
+      return {
+        ...state,
+        books: state.books.filter((book) => book._id !== payload),
       };
     case NOT_FOUND:
       return {
