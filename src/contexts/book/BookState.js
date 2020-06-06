@@ -2,7 +2,13 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import BookContext from './bookContext';
 import BookReducer from './bookReducer';
-import { SET_LOADING, GET_BOOKS, GET_BOOK, NOT_FOUND } from '../types';
+import {
+  SET_LOADING,
+  GET_BOOKS,
+  GET_BOOK,
+  NOT_FOUND,
+  CREATE_BOOK,
+} from '../types';
 
 const BookState = (props) => {
   const initialState = {
@@ -51,6 +57,26 @@ const BookState = (props) => {
     }
   };
 
+  // Create book
+  const createBook = async (formData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    try {
+      const res = await axios.post('/api/books/add', formData, config);
+
+      dispatch({
+        type: CREATE_BOOK,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err.response);
+    }
+  };
+
   return (
     <BookContext.Provider
       value={{
@@ -60,6 +86,7 @@ const BookState = (props) => {
         pagination,
         getBooks,
         getBook,
+        createBook,
       }}
     >
       {props.children}
