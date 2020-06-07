@@ -7,6 +7,7 @@ import AlertState from './contexts/alert/AlertState';
 import BookState from './contexts/book/BookState';
 import AuthState from './contexts/auth/AuthState';
 import TransactionState from './contexts/transaction/TransactionState';
+import UserState from './contexts/user/UserState';
 
 // Routes
 import Routes from './components/routing/Routes';
@@ -15,13 +16,15 @@ const App = () => {
   return (
     <AlertState>
       <AuthState>
-        <TransactionState>
-          <BookState>
-            <Router>
-              <Routes />
-            </Router>
-          </BookState>
-        </TransactionState>
+        <UserState>
+          <TransactionState>
+            <BookState>
+              <Router>
+                <Routes />
+              </Router>
+            </BookState>
+          </TransactionState>
+        </UserState>
       </AuthState>
     </AlertState>
   );

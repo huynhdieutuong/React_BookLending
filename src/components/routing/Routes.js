@@ -16,6 +16,8 @@ import Profile from '../profile/Profile';
 import Transactions from '../transaction/Transactions';
 import SingleTransaction from '../transaction/SingleTransaction';
 import AdminBooks from '../books/AdminBooks';
+import Users from '../user/Users';
+import SingleUser from '../user/SingleUser';
 
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
@@ -59,6 +61,12 @@ const Routes = () => {
         exact
         path='/transactions/:id'
         component={SingleTransaction}
+      />
+      <PrivateDefaultLayoutRoute exact path='/users' component={Users} />
+      <PrivateDefaultLayoutRoute
+        exact
+        path='/users/:id'
+        component={SingleUser}
       />
       <PrivateDefaultLayoutRoute exact path='/books' component={AdminBooks} />
       <Route component={NotFound} />

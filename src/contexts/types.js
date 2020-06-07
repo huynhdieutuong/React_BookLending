@@ -35,3 +35,12 @@ export const DELETE_TRANSACTION = 'DELETE_TRANSACTION';
 export const SET_TRANSACTION = 'SET_TRANSACTION';
 export const EDIT_TRANSACTION = 'EDIT_TRANSACTION';
 export const EDIT_TRANSACTION_SINGLE = 'EDIT_TRANSACTION_SINGLE';
+
+// User
+export const GET_USERS = 'GET_USERS';
+export const GET_USER = 'GET_USER';
+export const CREATE_USER = 'CREATE_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const SET_USER = 'SET_USER';
+export const EDIT_USER = 'EDIT_USER';
+export const EDIT_USER_SINGLE = 'EDIT_USER_SINGLE';
