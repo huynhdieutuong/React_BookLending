@@ -1,21 +1,31 @@
 import React, { useContext, useState } from 'react';
-import { Form, Button, message, Input } from 'antd';
+import { Form, Button, message, Input, Checkbox } from 'antd';
 import { MailOutlined, UserOutlined, MobileOutlined } from '@ant-design/icons';
 
 import UserContext from '../../contexts/user/userContext';
 
 const EditUser = ({ setVisible, single }) => {
   const { editUser, user } = useContext(UserContext);
-
   const [disabled, setDisabled] = useState(false);
 
+  // Is blocked
+  let isBlocked = false;
+  if (user.wrongLoginCount > 3) {
+    isBlocked = true;
+  }
+
   const onFinish = async (values) => {
-    let { email, name, phone } = values;
+    let { email, name, phone, isBlocked } = values;
+    const wrongLoginCount = isBlocked ? 4 : 0;
 
     const hide = message.loading('Action in progress..', 0);
 
     setDisabled(true);
-    const success = await editUser(user._id, { email, name, phone }, single);
+    const success = await editUser(
+      user._id,
+      { email, name, phone, wrongLoginCount },
+      single
+    );
 
     setTimeout(hide, 0);
     setDisabled(false);
@@ -34,6 +44,7 @@ const EditUser = ({ setVisible, single }) => {
         email: user.email,
         name: user.name,
         phone: user.phone,
+        isBlocked,
       }}
     >
       <Form.Item
@@ -63,7 +74,9 @@ const EditUser = ({ setVisible, single }) => {
           placeholder='Phone'
         />
       </Form.Item>
-
+      <Form.Item name='isBlocked' valuePropName='checked'>
+        <Checkbox>Mark as Blocked</Checkbox>
+      </Form.Item>
       <Form.Item style={{ marginBottom: '0' }}>
         <Button
           type='primary'
