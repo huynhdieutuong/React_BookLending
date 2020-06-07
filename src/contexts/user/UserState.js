@@ -26,12 +26,12 @@ const UserState = (props) => {
     users: [],
     user: {},
     pagination: {},
-    transactions: [],
+    transactions: null,
   };
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
-  const { loading, users, user, pagination } = state;
+  const { loading, users, user, pagination, transactions } = state;
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
@@ -77,7 +77,7 @@ const UserState = (props) => {
     };
 
     try {
-      const res = await axios.post('/api/users/create', formData, config);
+      const res = await axios.post('/api/users/add', formData, config);
 
       dispatch({
         type: CREATE_USER,
@@ -138,6 +138,27 @@ const UserState = (props) => {
     }
   };
 
+  // Change Password User
+  const changePasswordUser = async (id, formData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/users/${id}/password`,
+        formData,
+        config
+      );
+
+      return res.data.msg;
+    } catch (err) {
+      setAlert(err.response.data.errors, 'error');
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -145,12 +166,14 @@ const UserState = (props) => {
         users,
         user,
         pagination,
+        transactions,
         getUsers,
         getUser,
         createUser,
         deleteUser,
         setUser,
         editUser,
+        changePasswordUser,
       }}
     >
       {props.children}

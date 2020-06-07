@@ -1,5 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Row, Col, PageHeader, Descriptions, Tag, Button, Modal } from 'antd';
+import {
+  Row,
+  Col,
+  PageHeader,
+  Descriptions,
+  Tag,
+  Button,
+  Modal,
+  Switch,
+} from 'antd';
 
 import UserContext from '../../contexts/user/userContext';
 
@@ -9,10 +18,16 @@ import NotFound from '../layouts/NotFound';
 import DeleteUser from './DeleteUser';
 import EditUser from './EditUser';
 import TableTransactions from '../transaction/TableTransactions';
+import ChangePasswordUser from './ChangePasswordUser';
 
 const SingleUser = ({ match, history }) => {
   const { user, transactions, loading, getUser } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
+
+  const onChange = (checked) => {
+    setChangePassword(checked);
+  };
 
   useEffect(() => {
     getUser(match.params.id);
@@ -39,7 +54,13 @@ const SingleUser = ({ match, history }) => {
           onBack={() => window.history.back()}
           title={_id}
           extra={[
-            <Button type='primary' onClick={() => setVisible(true)}>
+            <Button
+              type='primary'
+              onClick={() => {
+                setVisible(true);
+                setChangePassword(false);
+              }}
+            >
               Edit
             </Button>,
             <DeleteUser id={_id} history={history} />,
@@ -47,7 +68,7 @@ const SingleUser = ({ match, history }) => {
         >
           <Descriptions size='small' column={1}>
             <Descriptions.Item>
-              <img style={{ width: '50px' }} src={avatarUrl} alt={name} />
+              <img style={{ width: '100px' }} src={avatarUrl} alt={name} />
             </Descriptions.Item>
             <Descriptions.Item label='Email'>{email}</Descriptions.Item>
             <Descriptions.Item label='Name'>{name}</Descriptions.Item>
@@ -64,14 +85,24 @@ const SingleUser = ({ match, history }) => {
       <Col span={16}>
         <TableTransactions dataSource={transactions} />
       </Col>
-      <Modal
-        title='Edit User'
-        visible={visible}
-        onCancel={() => setVisible(false)}
-        footer={null}
-      >
-        <EditUser setVisible={setVisible} single={true} />
-      </Modal>
+      {visible && (
+        <Modal
+          title='Edit User'
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+        >
+          <p align='right'>
+            <span> Switch to Change Password</span>{' '}
+            <Switch onChange={onChange} />
+          </p>
+          {changePassword ? (
+            <ChangePasswordUser setVisible={setVisible} />
+          ) : (
+            <EditUser setVisible={setVisible} single={true} />
+          )}
+        </Modal>
+      )}
     </Row>
   );
 };

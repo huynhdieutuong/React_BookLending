@@ -1,15 +1,21 @@
 import React, { useContext, useState, Fragment } from 'react';
-import { Table, Tag, Row, Col, Button, Modal } from 'antd';
+import { Table, Tag, Row, Col, Button, Modal, Switch } from 'antd';
 import { Link } from 'react-router-dom';
 
 import EditUser from './EditUser';
 import DeleteUser from './DeleteUser';
 
 import UserContext from '../../contexts/user/userContext';
+import ChangePasswordUser from './ChangePasswordUser';
 
 const TableUsers = ({ dataSource, isAdmin }) => {
   const [visible, setVisible] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
   const { setUser } = useContext(UserContext);
+
+  const onChange = (checked) => {
+    setChangePassword(checked);
+  };
 
   const columns = [
     {
@@ -64,6 +70,7 @@ const TableUsers = ({ dataSource, isAdmin }) => {
               onClick={() => {
                 setUser(user);
                 setVisible(true);
+                setChangePassword(false);
               }}
             >
               Edit
@@ -82,12 +89,20 @@ const TableUsers = ({ dataSource, isAdmin }) => {
       <Table columns={columns} dataSource={dataSource} pagination={false} />
       {visible && (
         <Modal
-          title='Edit User'
+          title={changePassword ? 'Change Password' : 'Edit User'}
           visible={visible}
           onCancel={() => setVisible(false)}
           footer={null}
         >
-          <EditUser setVisible={setVisible} />
+          <p align='right'>
+            <span> Switch to Change Password</span>{' '}
+            <Switch onChange={onChange} />
+          </p>
+          {changePassword ? (
+            <ChangePasswordUser setVisible={setVisible} />
+          ) : (
+            <EditUser setVisible={setVisible} />
+          )}
         </Modal>
       )}
     </Fragment>
