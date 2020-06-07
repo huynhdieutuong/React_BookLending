@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import { Row, Col, PageHeader, Descriptions, Tag } from 'antd';
+import React, { useEffect, useContext, useState } from 'react';
+import { Row, Col, PageHeader, Descriptions, Tag, Button, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
@@ -10,13 +10,14 @@ import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
 
 import DeleteTransaction from './DeleteTransaction';
-import EditTransactionModal from './EditTransactionModal';
+import EditTransaction from './EditTransaction';
 
 const SingleTransaction = ({ match, history }) => {
   const { transaction, loading, getTransaction, daysBorrow } = useContext(
     TransactionContext
   );
   const authState = useContext(AuthContext);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     getTransaction(match.params.id);
@@ -47,7 +48,9 @@ const SingleTransaction = ({ match, history }) => {
           title={_id}
           extra={
             authState.user.isAdmin && [
-              <EditTransactionModal transaction={transaction} single={true} />,
+              <Button type='primary' onClick={() => setVisible(true)}>
+                Edit
+              </Button>,
               <DeleteTransaction id={_id} history={history} />,
             ]
           }
@@ -94,6 +97,14 @@ const SingleTransaction = ({ match, history }) => {
             ))}
         </Row>
       </Col>
+      <Modal
+        title='Edit Transaction'
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        footer={null}
+      >
+        <EditTransaction setVisible={setVisible} single={true} />
+      </Modal>
     </Row>
   );
 };

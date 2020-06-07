@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, Select, Button, message, Checkbox } from 'antd';
 
 import Spinner from '../layouts/Spinner';
@@ -7,13 +7,15 @@ import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const { Option } = Select;
 
-const EditTransaction = ({ setVisible, transaction, single }) => {
-  const { editTransaction, loadAdminDatas, adminDatas } = useContext(
-    TransactionContext
-  );
+const EditTransaction = ({ setVisible, single }) => {
+  const {
+    editTransaction,
+    loadAdminDatas,
+    adminDatas,
+    transaction,
+  } = useContext(TransactionContext);
 
   const [disabled, setDisabled] = useState(false);
-  const formRef = useRef('');
 
   const onFinish = async (values) => {
     let { user, books, isComplete } = values;
@@ -29,7 +31,6 @@ const EditTransaction = ({ setVisible, transaction, single }) => {
     setTimeout(hide, 0);
     setVisible(false);
     setDisabled(false);
-    formRef.current.resetFields();
   };
 
   useEffect(() => {
@@ -41,7 +42,6 @@ const EditTransaction = ({ setVisible, transaction, single }) => {
 
   return (
     <Form
-      ref={formRef}
       name='normal_login'
       className='login-form'
       onFinish={onFinish}

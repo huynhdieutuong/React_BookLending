@@ -11,6 +11,7 @@ import {
   DELETE_TRANSACTION,
   EDIT_TRANSACTION,
   EDIT_TRANSACTION_SINGLE,
+  SET_TRANSACTION,
 } from '../types';
 
 import TransactionContext from './transactionContext';
@@ -129,6 +130,14 @@ const TransactionState = (props) => {
     }
   };
 
+  // Set Transaction
+  const setTransaction = (transaction) => {
+    dispatch({
+      type: SET_TRANSACTION,
+      payload: transaction,
+    });
+  };
+
   // Edit Transaction
   const editTransaction = async (id, formData, single = false) => {
     const config = {
@@ -167,6 +176,7 @@ const TransactionState = (props) => {
         loadAdminDatas,
         createTransaction,
         deleteTransaction,
+        setTransaction,
         editTransaction,
       }}
     >

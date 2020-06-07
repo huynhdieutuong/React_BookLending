@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
-import { Table, Tag, Row, Col, Button } from 'antd';
+import React, { useContext, useState, Fragment } from 'react';
+import { Table, Tag, Row, Col, Button, Modal } from 'antd';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
-import EditTransactionModal from './EditTransactionModal';
+import EditTransaction from './EditTransaction';
 import DeleteTransaction from './DeleteTransaction';
 
 import TransactionContext from '../../contexts/transaction/transactionContext';
 
 const TableTransactions = ({ dataSource, isAdmin }) => {
-  const { daysBorrow } = useContext(TransactionContext);
+  const [visible, setVisible] = useState(false);
+  const { daysBorrow, setTransaction } = useContext(TransactionContext);
 
   const columns = [
     {
@@ -90,7 +91,17 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
             </Button>
           </Col>
           <Col flex='30%' style={{ marginBottom: '5px', marginRight: '5px' }}>
-            {isAdmin && <EditTransactionModal transaction={transaction} />}
+            {isAdmin && (
+              <Button
+                type='primary'
+                onClick={() => {
+                  setTransaction(transaction);
+                  setVisible(true);
+                }}
+              >
+                Edit
+              </Button>
+            )}
           </Col>
           <Col flex='30%'>
             {isAdmin && <DeleteTransaction id={transaction._id} />}
@@ -100,7 +111,21 @@ const TableTransactions = ({ dataSource, isAdmin }) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Fragment>
+      <Table columns={columns} dataSource={dataSource} pagination={false} />
+      {visible && (
+        <Modal
+          title='Edit Transaction'
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+        >
+          <EditTransaction setVisible={setVisible} />
+        </Modal>
+      )}
+    </Fragment>
+  );
 };
 
 export default TableTransactions;

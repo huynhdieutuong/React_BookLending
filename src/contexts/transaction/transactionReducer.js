@@ -8,6 +8,7 @@ import {
   DELETE_TRANSACTION,
   EDIT_TRANSACTION,
   EDIT_TRANSACTION_SINGLE,
+  SET_TRANSACTION,
 } from '../types';
 
 export default (state, action) => {
@@ -63,6 +64,7 @@ export default (state, action) => {
         ),
       };
     case EDIT_TRANSACTION_SINGLE:
+    case SET_TRANSACTION:
       return {
         ...state,
         transaction: payload,
