@@ -21,6 +21,7 @@ const Transactions = () => {
 
   useEffect(() => {
     getTransactions(textSubSearch);
+    localStorage.setItem('currentMenu', 'transactions');
     // eslint-disable-next-line
   }, []);
 

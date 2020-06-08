@@ -20,6 +20,7 @@ const Users = () => {
 
   useEffect(() => {
     getUsers(textSubSearch);
+    localStorage.setItem('currentMenu', 'users');
     // eslint-disable-next-line
   }, []);
 

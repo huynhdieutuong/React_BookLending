@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Row, Col, PageHeader, Descriptions, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +12,10 @@ const Profile = () => {
   const { user } = useContext(AuthContext);
 
   const { email, name, phone } = user;
+
+  useEffect(() => {
+    localStorage.setItem('currentMenu', 'profile');
+  }, []);
 
   return (
     <Row>

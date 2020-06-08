@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, Fragment, useEffect } from 'react';
 import { Table, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -6,11 +6,15 @@ import CartContext from '../../contexts/cart/cartContext';
 
 import ChangeQuantity from './ChangeQuantity';
 import RemoveBook from './RemoveBook';
-import Spinner from '../layouts/Spinner';
 import MakeTransaction from './MakeTransaction';
+import Spinner from '../layouts/Spinner';
 
 const Cart = () => {
   const { cart } = useContext(CartContext);
+
+  useEffect(() => {
+    localStorage.setItem('currentMenu', 'cart');
+  }, []);
 
   const columns = [
     {

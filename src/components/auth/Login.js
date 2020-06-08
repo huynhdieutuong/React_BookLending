@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -20,6 +20,10 @@ const Login = () => {
     setTimeout(hide, 0);
     setDisabled(false);
   };
+
+  useEffect(() => {
+    localStorage.setItem('currentMenu', 'login');
+  }, []);
 
   return (
     <div className='wrapper-form'>

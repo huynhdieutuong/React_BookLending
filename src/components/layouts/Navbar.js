@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import {
@@ -22,9 +22,6 @@ const { SubMenu } = Menu;
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
-  const [currentMenu, setCurrentMenu] = useState(
-    localStorage.getItem('currentMenu')
-  );
 
   // Count books in cart
   let count = 0;
@@ -35,7 +32,6 @@ const Navbar = () => {
   }
 
   const handleClick = (e) => {
-    setCurrentMenu(e.key);
     localStorage.setItem('currentMenu', e.key);
     localStorage.removeItem('textSubSearch');
   };
@@ -48,7 +44,6 @@ const Navbar = () => {
           src={Logo}
           alt='logo'
           onClick={() => {
-            setCurrentMenu('books');
             localStorage.setItem('currentMenu', 'books');
           }}
         />
@@ -58,7 +53,7 @@ const Navbar = () => {
         className='menu-right'
         theme='dark'
         mode='horizontal'
-        selectedKeys={currentMenu}
+        selectedKeys={localStorage.getItem('currentMenu')}
         onClick={handleClick}
       >
         <Menu.Item key='cart' icon={<ShoppingOutlined />}>

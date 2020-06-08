@@ -20,6 +20,7 @@ const AdminBooks = () => {
 
   useEffect(() => {
     getBooks(textSubSearch);
+    localStorage.setItem('currentMenu', 'adminBooks');
     // eslint-disable-next-line
   }, []);
 

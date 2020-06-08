@@ -31,6 +31,7 @@ const SingleUser = ({ match, history }) => {
 
   useEffect(() => {
     getUser(match.params.id);
+    localStorage.setItem('currentMenu', 'users');
     // eslint-disable-next-line
   }, []);
 

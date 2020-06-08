@@ -23,6 +23,7 @@ const SingleBook = ({ match, history }) => {
 
   useEffect(() => {
     getBook(match.params.id);
+    localStorage.setItem('currentMenu', 'books');
     // eslint-disable-next-line
   }, []);
 

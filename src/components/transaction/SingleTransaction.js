@@ -21,6 +21,7 @@ const SingleTransaction = ({ match, history }) => {
 
   useEffect(() => {
     getTransaction(match.params.id);
+    localStorage.setItem('currentMenu', 'transactions');
     // eslint-disable-next-line
   }, []);
 

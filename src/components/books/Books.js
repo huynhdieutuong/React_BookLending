@@ -20,7 +20,7 @@ const Books = ({ location }) => {
     if (location.pathname === '/search') {
       getBooks(textSearch);
     }
-
+    localStorage.setItem('currentMenu', 'books');
     // eslint-disable-next-line
   }, [location]);
 
