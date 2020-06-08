@@ -6,9 +6,9 @@ This is a React application. It is a small ecommerce site for lending books that
 
 ## Demo Live
 
-### The App is live at [Netlify.com]()
+### The App is live at [Netlify.com](https://tuong-book-lending.netlify.app/)
 
-### The API is live at [Swagger.io]()
+### The API is live at [Swagger.io](https://app.swaggerhub.com/apis/huynhdieutuong/book-lending_api/1.0.0)
 
 ---
 
@@ -20,13 +20,13 @@ This is a React application. It is a small ecommerce site for lending books that
 - Search books by title
 - Get book by ID
 
-## Cart
+## Cart (Require Login)
 
 - Get cart
 - Add to cart
 - Remove book in cart
 - Decrease & Increase number's book
-- Make transaction (Require Login)
+- Make transaction
 
 ## Auth
 
@@ -64,6 +64,7 @@ This is a React application. It is a small ecommerce site for lending books that
 - Create user
 - Edit user
 - Delete user
+- Mark as Blocked (when fail login over 3 times) & Active
 
 ### Transactions
 

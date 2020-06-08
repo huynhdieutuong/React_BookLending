@@ -1,0 +1,14 @@
+[build]
+  publish="build"
+
+# API proxying
+[[redirects]]
+    from = "/api/*"
+    to = "https://book-lending-api.herokuapp.com/api/:splat"
+    status = 200
+    force = true
+
+[[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
