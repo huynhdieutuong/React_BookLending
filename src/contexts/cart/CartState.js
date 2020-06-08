@@ -3,7 +3,13 @@ import axios from 'axios';
 
 import CartContext from './cartContext';
 import CartReducer from './cartReducer';
-import { GET_CART, ADD_TO_CART, RESET_CART, CHANGE_QUANTITY } from '../types';
+import {
+  GET_CART,
+  ADD_TO_CART,
+  RESET_CART,
+  CHANGE_QUANTITY,
+  REMOVE_BOOK,
+} from '../types';
 
 const CartState = (props) => {
   const initialState = {
@@ -57,6 +63,16 @@ const CartState = (props) => {
     });
   };
 
+  // Remove book in cart
+  const removeBook = async (bookId) => {
+    const res = await axios.put(`/api/cart/delete/${bookId}`);
+
+    dispatch({
+      type: REMOVE_BOOK,
+      payload: res.data,
+    });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -65,6 +81,7 @@ const CartState = (props) => {
         resetCart,
         addToCart,
         changeQuantity,
+        removeBook,
       }}
     >
       {props.children}

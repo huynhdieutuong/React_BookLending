@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
-import { Table, Row, Col, Button } from 'antd';
+import { Table, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 
 import CartContext from '../../contexts/cart/cartContext';
 
 import ChangeQuantity from './ChangeQuantity';
+import RemoveBook from './RemoveBook';
+import Spinner from '../layouts/Spinner';
 
 const Cart = () => {
   const { cart } = useContext(CartContext);
@@ -31,7 +33,7 @@ const Cart = () => {
       render: (item) => (
         <>
           <Link to={`/books/${item.book._id}`}>
-            <span style={{ maxWidth: '300px' }}>{item.book.title}</span>
+            <span>{item.book.title}</span>
           </Link>
         </>
       ),
@@ -41,16 +43,18 @@ const Cart = () => {
       key: 'action',
       render: (item) => (
         <Row size='middle'>
-          <Col flex='60%' style={{ marginBottom: '5px', marginRight: '5px' }}>
+          <Col flex='45%' style={{ marginBottom: '5px', marginRight: '5px' }}>
             <ChangeQuantity quantity={item.quantity} bookId={item.book._id} />
           </Col>
-          <Col flex='30%'>
-            <Button type='danger'>Delete</Button>
+          <Col flex='45%'>
+            <RemoveBook bookId={item.book._id} title={item.book.title} />
           </Col>
         </Row>
       ),
     },
   ];
+
+  if (!cart) return <Spinner />;
 
   return <Table columns={columns} dataSource={cart} />;
 };
