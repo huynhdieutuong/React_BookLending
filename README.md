@@ -4,6 +4,12 @@
 
 This is a React application. It is a small ecommerce site for lending books that includes authentication, books and transactions, profile, cart, admin.
 
+```
+Account Admin:
+email: admin@gmail.com
+password: 88888888
+```
+
 ## Demo Live
 
 ### The App is live at [Netlify.com](https://tuong-book-lending.netlify.app/)
