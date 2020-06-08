@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import CartContext from './cartContext';
 import CartReducer from './cartReducer';
-import { GET_CART, ADD_TO_CART, RESET_CART } from '../types';
+import { GET_CART, ADD_TO_CART, RESET_CART, CHANGE_QUANTITY } from '../types';
 
 const CartState = (props) => {
   const initialState = {
@@ -37,6 +37,26 @@ const CartState = (props) => {
     });
   };
 
+  // Change quantity
+  const changeQuantity = async (bookId, number) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const res = await axios.put(
+      `/api/cart/number/${bookId}`,
+      { number },
+      config
+    );
+
+    dispatch({
+      type: CHANGE_QUANTITY,
+      payload: res.data,
+    });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -44,6 +64,7 @@ const CartState = (props) => {
         getCart,
         resetCart,
         addToCart,
+        changeQuantity,
       }}
     >
       {props.children}

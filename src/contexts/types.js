@@ -49,3 +49,4 @@ export const EDIT_USER_SINGLE = 'EDIT_USER_SINGLE';
 export const GET_CART = 'GET_CART';
 export const RESET_CART = 'RESET_CART';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const CHANGE_QUANTITY = 'CHANGE_QUANTITY';
