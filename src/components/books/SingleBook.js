@@ -1,9 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Row, Col, PageHeader, Tabs, Button, Modal } from 'antd';
+import { Row, Col, PageHeader, Tabs, Button, Modal, message } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import BookContext from '../../contexts/book/bookContext';
 import AuthContext from '../../contexts/auth/authContext';
+import CartContext from '../../contexts/cart/cartContext';
 
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
@@ -15,7 +17,9 @@ const { TabPane } = Tabs;
 const SingleBook = ({ match, history }) => {
   const { book, loading, getBook } = useContext(BookContext);
   const { user } = useContext(AuthContext);
+  const { addToCart } = useContext(CartContext);
   const [visible, setVisible] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     getBook(match.params.id);
@@ -28,6 +32,17 @@ const SingleBook = ({ match, history }) => {
 
   const { _id, coverUrl, title, description } = book;
 
+  const onPickToBorrow = async () => {
+    const hide = message.loading('Action in progress..', 0);
+    setDisabled(true);
+
+    await addToCart(_id);
+
+    setTimeout(hide, 0);
+    message.success(`${title} added to cart`);
+    setDisabled(false);
+  };
+
   return (
     <Row>
       <Col span={8}>
@@ -39,7 +54,7 @@ const SingleBook = ({ match, history }) => {
           onBack={() => window.history.back()}
           title={title}
           extra={
-            user.isAdmin
+            user && user.isAdmin
               ? [
                   <Button type='primary' onClick={() => setVisible(true)}>
                     Edit
@@ -47,13 +62,22 @@ const SingleBook = ({ match, history }) => {
                   <DeleteBook id={_id} history={history} />,
                 ]
               : [
-                  <Button
-                    icon={<ShoppingCartOutlined />}
-                    key='1'
-                    type='primary'
-                  >
-                    Pick to Borrow
-                  </Button>,
+                  user ? (
+                    <Button
+                      icon={<ShoppingCartOutlined />}
+                      type='primary'
+                      onClick={onPickToBorrow}
+                      disabled={disabled}
+                    >
+                      Pick to Borrow
+                    </Button>
+                  ) : (
+                    <Link to='/login'>
+                      <Button icon={<ShoppingCartOutlined />} type='primary'>
+                        Pick to Borrow
+                      </Button>
+                    </Link>
+                  ),
                 ]
           }
           footer={

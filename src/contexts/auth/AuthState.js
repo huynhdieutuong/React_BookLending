@@ -17,11 +17,13 @@ import {
 } from '../types';
 
 import AlertContext from '../alert/alertContext';
+import CartContext from '../cart/cartContext';
 
 import setAuthToken from '../../utils/setAuthToken';
 
 const AuthState = (props) => {
   const { setAlert } = useContext(AlertContext);
+  const { getCart, resetCart } = useContext(CartContext);
 
   const initialState = {
     loading: false,
@@ -54,6 +56,8 @@ const AuthState = (props) => {
         type: USER_LOADED,
         payload: res.data,
       });
+
+      getCart();
     } catch (err) {
       dispatch({ type: AUTH_ERROR });
     }
@@ -120,7 +124,10 @@ const AuthState = (props) => {
   };
 
   // Logout
-  const logout = () => dispatch({ type: LOGOUT });
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+    resetCart();
+  };
 
   // Change Avatar
   const changeAvatar = async (formData) => {

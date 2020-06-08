@@ -15,15 +15,24 @@ import SearchBar from './SearchBar';
 import Logo from '../images/logo-bookstore.png';
 
 import AuthContext from '../../contexts/auth/authContext';
+import CartContext from '../../contexts/cart/cartContext';
 
 const { SubMenu } = Menu;
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext);
-
+  const { cart } = useContext(CartContext);
   const [currentMenu, setCurrentMenu] = useState(
     localStorage.getItem('currentMenu')
   );
+
+  // Count books in cart
+  let count = 0;
+  if (cart) {
+    cart.forEach((item) => {
+      count += item.quantity;
+    });
+  }
 
   const handleClick = (e) => {
     setCurrentMenu(e.key);
@@ -53,7 +62,7 @@ const Navbar = () => {
         onClick={handleClick}
       >
         <Menu.Item key='cart' icon={<ShoppingOutlined />}>
-          <Link to='#!'>0</Link>
+          <Link to='/cart'>{count}</Link>
         </Menu.Item>
         {!isAuthenticated ? (
           <Menu.Item key='login' icon={<LoginOutlined />}>

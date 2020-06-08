@@ -18,6 +18,7 @@ import SingleTransaction from '../transaction/SingleTransaction';
 import AdminBooks from '../books/AdminBooks';
 import Users from '../user/Users';
 import SingleUser from '../user/SingleUser';
+import Cart from '../cart/Cart';
 
 import Spinner from '../layouts/Spinner';
 import NotFound from '../layouts/NotFound';
@@ -69,6 +70,7 @@ const Routes = () => {
         component={SingleUser}
       />
       <PrivateDefaultLayoutRoute exact path='/books' component={AdminBooks} />
+      <PrivateDefaultLayoutRoute exact path='/cart' component={Cart} />
       <Route component={NotFound} />
     </Switch>
   );

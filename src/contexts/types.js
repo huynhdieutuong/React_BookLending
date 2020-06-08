@@ -44,3 +44,8 @@ export const DELETE_USER = 'DELETE_USER';
 export const SET_USER = 'SET_USER';
 export const EDIT_USER = 'EDIT_USER';
 export const EDIT_USER_SINGLE = 'EDIT_USER_SINGLE';
+
+// Cart
+export const GET_CART = 'GET_CART';
+export const RESET_CART = 'RESET_CART';
+export const ADD_TO_CART = 'ADD_TO_CART';
