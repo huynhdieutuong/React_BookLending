@@ -21,7 +21,7 @@ export default (state, action) => {
     case RESET_CART:
       return {
         ...state,
-        cart: null,
+        cart: [],
       };
     default:
       return state;

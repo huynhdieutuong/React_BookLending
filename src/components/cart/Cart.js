@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { Table, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import CartContext from '../../contexts/cart/cartContext';
 import ChangeQuantity from './ChangeQuantity';
 import RemoveBook from './RemoveBook';
 import Spinner from '../layouts/Spinner';
+import MakeTransaction from './MakeTransaction';
 
 const Cart = () => {
   const { cart } = useContext(CartContext);
@@ -56,7 +57,12 @@ const Cart = () => {
 
   if (!cart) return <Spinner />;
 
-  return <Table columns={columns} dataSource={cart} />;
+  return (
+    <Fragment>
+      <Table columns={columns} dataSource={cart} pagination={false} />
+      <MakeTransaction />
+    </Fragment>
+  );
 };
 
 export default Cart;

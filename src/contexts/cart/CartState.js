@@ -73,6 +73,13 @@ const CartState = (props) => {
     });
   };
 
+  // Make transaction
+  const makeTransaction = async () => {
+    await axios.post('/api/cart/transaction');
+
+    resetCart();
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -82,6 +89,7 @@ const CartState = (props) => {
         addToCart,
         changeQuantity,
         removeBook,
+        makeTransaction,
       }}
     >
       {props.children}
