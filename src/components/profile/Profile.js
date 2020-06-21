@@ -7,6 +7,7 @@ import AuthContext from '../../contexts/auth/authContext';
 import ChangeAvatar from './ChangeAvatar';
 import EditProfileModal from './EditProfileModal';
 import ChangePasswordModal from './ChangePasswordModal';
+import CreatePasswordModal from './CreatePasswordModal';
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -32,7 +33,7 @@ const Profile = () => {
               <Link to='/transactions'>Transactions</Link>
             </Button>,
             <EditProfileModal />,
-            <ChangePasswordModal />,
+            user.password ? <ChangePasswordModal /> : <CreatePasswordModal />,
           ]}
         >
           <Descriptions size='small' column={1}>

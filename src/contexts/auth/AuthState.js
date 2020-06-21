@@ -223,6 +223,24 @@ const AuthState = (props) => {
     }
   };
 
+  // Create Password
+  const createPassword = async (formData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      await axios.put('/api/profile/create-password', formData, config);
+
+      setAlert(['Password Created'], 'success');
+      return true;
+    } catch (err) {
+      setAlert(err.response.data.errors, 'error');
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -238,6 +256,7 @@ const AuthState = (props) => {
         changeAvatar,
         editProfile,
         changePassword,
+        createPassword,
       }}
     >
       {props.children}

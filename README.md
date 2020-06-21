@@ -6,8 +6,7 @@ This is a React application. It is a small ecommerce site for lending books that
 
 ```
 Account Admin:
-email: admin@gmail.com
-password: 88888888
+Please contact me
 ```
 
 ## Demo Live
@@ -38,6 +37,7 @@ password: 88888888
 
 - Register user
 - Login user
+- Login with Facebook & Google
 - Get logged in user
 - Prevent access Transactions, Profile if not log in.
 
