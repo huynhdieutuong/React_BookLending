@@ -2,11 +2,13 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 import AuthContext from '../../contexts/auth/authContext';
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login, loginSocial } = useContext(AuthContext);
 
   const [disabled, setDisabled] = useState(false);
 
@@ -24,6 +26,22 @@ const Login = () => {
   useEffect(() => {
     localStorage.setItem('currentMenu', 'login');
   }, []);
+
+  const responseFacebook = (res) => {
+    const email = res.email;
+    const name = res.name;
+    const avatarUrl = `http://graph.facebook.com/${res.id}/picture?type=large`;
+
+    loginSocial(email, name, avatarUrl);
+  };
+
+  const responseGoogle = (res) => {
+    const email = res.profileObj.email;
+    const name = res.profileObj.familyName + ' ' + res.profileObj.givenName;
+    const avatarUrl = res.profileObj.imageUrl.replace('s96-c', 's200-c');
+
+    loginSocial(email, name, avatarUrl);
+  };
 
   return (
     <div className='wrapper-form'>
@@ -59,6 +77,24 @@ const Login = () => {
             Log in
           </Button>
           Or <Link to='/register'>register now!</Link>
+        </Form.Item>
+
+        <Form.Item>
+          <FacebookLogin
+            appId='3208532689199131'
+            autoLoad={false}
+            fields='name,email,picture'
+            callback={responseFacebook}
+            cssClass='ant-btn btn-facebook'
+          />
+          <GoogleLogin
+            clientId='872687324411-kffvug2kkej5e4k4rd0rvc0kqevno8j0.apps.googleusercontent.com'
+            className='ant-btn btn-google'
+            icon={false}
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
         </Form.Item>
       </Form>
     </div>

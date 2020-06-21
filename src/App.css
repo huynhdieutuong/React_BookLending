@@ -44,3 +44,27 @@
 .ant-tooltip-inner {
   display: none;
 }
+
+.ant-form-item-control-input .btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border: none;
+  padding: 4px 10px;
+  margin-right: 8px;
+}
+
+.ant-form-item-control-input .btn-facebook:hover {
+  color: #fff;
+  background-color: #23345a;
+}
+
+.ant-form-item-control-input .btn-google {
+  color: #fff !important;
+  background-color: #dd4b39 !important;
+  box-shadow: none !important;
+}
+
+.ant-form-item-control-input .btn-google:hover {
+  color: #fff !important;
+  background-color: #c23321 !important;
+}

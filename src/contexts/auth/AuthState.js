@@ -93,6 +93,36 @@ const AuthState = (props) => {
     }
   };
 
+  // Login
+  const loginSocial = async (email, name, avatarUrl) => {
+    setLoading();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        '/api/auth/login-social',
+        { email, name, avatarUrl },
+        config
+      );
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+
+      loadUser();
+    } catch (err) {
+      dispatch({ type: LOGIN_FAIL });
+
+      setAlert(err.response.data.errors, 'error');
+    }
+  };
+
   // Register
   const register = async (email, name, phone, password, password2) => {
     setLoading();
@@ -201,6 +231,7 @@ const AuthState = (props) => {
         isAuthenticated,
         user,
         login,
+        loginSocial,
         loadUser,
         logout,
         register,
