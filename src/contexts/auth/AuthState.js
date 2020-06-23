@@ -94,7 +94,7 @@ const AuthState = (props) => {
   };
 
   // Login
-  const loginSocial = async (email, name, avatarUrl) => {
+  const loginSocial = async (method, userID, accessToken) => {
     setLoading();
 
     const config = {
@@ -106,7 +106,7 @@ const AuthState = (props) => {
     try {
       const res = await axios.post(
         '/api/auth/login-social',
-        { email, name, avatarUrl },
+        { method, userID, accessToken },
         config
       );
 

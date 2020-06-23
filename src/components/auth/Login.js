@@ -28,19 +28,11 @@ const Login = () => {
   }, []);
 
   const responseFacebook = (res) => {
-    const email = res.email;
-    const name = res.name;
-    const avatarUrl = `http://graph.facebook.com/${res.id}/picture?type=large`;
-
-    loginSocial(email, name, avatarUrl);
+    loginSocial('facebook', res.id, res.accessToken);
   };
 
   const responseGoogle = (res) => {
-    const email = res.profileObj.email;
-    const name = res.profileObj.familyName + ' ' + res.profileObj.givenName;
-    const avatarUrl = res.profileObj.imageUrl.replace('s96-c', 's200-c');
-
-    loginSocial(email, name, avatarUrl);
+    loginSocial('google', res.googleId, res.accessToken);
   };
 
   return (
@@ -91,6 +83,7 @@ const Login = () => {
             clientId='872687324411-kffvug2kkej5e4k4rd0rvc0kqevno8j0.apps.googleusercontent.com'
             className='ant-btn btn-google'
             icon={false}
+            buttonText='Login with Google'
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
